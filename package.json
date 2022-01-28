@@ -1,7 +1,7 @@
 {
     "name": "react-redux-template",
     "description": "An example app using the MERN stack, with the main branch using React and Redux.",
-    "version": "0.1.0",
+    "version": "1.22.17",
     "private": true,
     "engines": {
         "node": ">=10.14.2",
