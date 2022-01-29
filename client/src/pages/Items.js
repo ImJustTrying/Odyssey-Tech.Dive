@@ -30,12 +30,6 @@ const linkTextColor = linkPathname => {
 
 const itemsPageVariants = [
   {
-    name: 'Items',
-    toPathname: routes.ITEMS,
-    pageComonent: ItemsList,
-  },
- 
-  {
     name: 'Items (with only styled-components)',
     toPathname: `${routes.ITEMS}/items-plain`,
     pageComponent: ItemsPlain,
@@ -47,7 +41,6 @@ class Items extends Component {
     // TODO: would be better to dynamically create the routes based on page variations
     const itemsPages = (
       <Switch>
-        <Route exact path={routes.ITEMS} component={ItemsList} />
         <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} />
       </Switch>
     );

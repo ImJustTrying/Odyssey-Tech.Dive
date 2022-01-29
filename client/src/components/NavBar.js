@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
 import Links from './Links';
 
 const Container = styled.div.attrs({
@@ -14,7 +13,7 @@ const Container = styled.div.attrs({
 const Nav = styled.nav.attrs({
   className: 'navbar navbar-expand-lg navbar-light bg-light',
 })`
-  margin-bottom: 20px;
+  margin-bottom: 6%;
 
   @media screen and (min-width: 992px) {
     padding: 0.5em 25%;

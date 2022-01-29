@@ -174,7 +174,7 @@ class ItemInsert extends Component {
 
     return (
       <Wrapper>
-        <Title>Create Item</Title>
+        <Title>Enter Exam Record</Title>
 
         <Label>Name: </Label>
         <InputText type="text" value={name} onChange={this.handleChangeInputName} />

@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Logo from './Logo';
-
 const HomeWrapper = styled.div``;
-
 const Collapse = styled.div.attrs({
   // className: 'collapse navbar-collapse',
 })`

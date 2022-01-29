@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
-
 import styled from 'styled-components';
 
 const generateRandomImageWidth = () => {
