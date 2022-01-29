@@ -7,7 +7,7 @@ import { routes } from '../constants';
 import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 
-import { ItemsList, ItemsPlain, ItemsTable } from '../pages';
+import { ItemsList, ItemsPlain } from '../pages';
 
 const LinksGridContainer = styled.div`
   display: grid;
@@ -34,11 +34,7 @@ const itemsPageVariants = [
     toPathname: routes.ITEMS,
     pageComonent: ItemsList,
   },
-  {
-    name: 'Items (using react-table-v6)',
-    toPathname: `${routes.ITEMS}/react-table-v6`,
-    pageComponent: ItemsTable,
-  },
+ 
   {
     name: 'Items (with only styled-components)',
     toPathname: `${routes.ITEMS}/items-plain`,
@@ -52,7 +48,6 @@ class Items extends Component {
     const itemsPages = (
       <Switch>
         <Route exact path={routes.ITEMS} component={ItemsList} />
-        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
         <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} />
       </Switch>
     );

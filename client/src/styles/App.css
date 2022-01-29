@@ -36,3 +36,9 @@
 .view-container {
     overflow: auto;
 }
+.desc {
+  text-align: center;
+    width: 40%;
+    font-size: 150%;
+    margin-left: 31%;
+}

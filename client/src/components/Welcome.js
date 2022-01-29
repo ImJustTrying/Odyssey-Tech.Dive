@@ -1,28 +1,16 @@
 /* eslint-disable semi */
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Logo from './Logo';
+
 
 const Welcome = () => (
   <div className="welcome--container">
-    <h3 className="welcome--message-text">Welcome to the Template</h3>
-    <div className="page-layout--header">
-      <div className="page-layout--details">
-        <h1 className="page-layout--name">Hack.Diversity MERN Stack Template</h1>
-        <p className="page-layout--description">
-          A simple CRUD app built using the&nbsp;
-          <a
-            href="https://www.educative.io/edpresso/what-is-mern-stack"
-            target="_blank"
-            rel="noopener noreferrer">
-            MERN&nbsp;tech-stack
-          </a>
-          also
-          <Link to="/item/61ddf4aebb70255bc9bd096c/update">Here</Link>.
-        </p>
-      </div>
-    </div>
-    <Logo />
+        <h1 className="page-layout--name">Enter Reports Here</h1>
+        <section className = "desc"> 
+        This can help visualize infections such as pneumonia within a patient’s lungs. 
+        With this in mind, your task is to create a web application that allows doctors to submit structured radiology reports (assessments of x-ray images) for exams of patients with COVID-19. 
+        This application will allow staff to review patient trends, update exam information, and view patient history.
+        </section>
+      <br/>
   </div>
 );
 

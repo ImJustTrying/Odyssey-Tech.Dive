@@ -49,12 +49,6 @@ class Links extends Component {
 
     return (
       <React.Fragment>
-        <HomeWrapper>
-          <Logo logoStyles={logoStyles} />
-          <Link to="/" className="navbar-brand" style={homeStyles}>
-            Home
-          </Link>
-        </HomeWrapper>
         <Collapse>
           <List>
             {navBarItems.map(navBarItem => (

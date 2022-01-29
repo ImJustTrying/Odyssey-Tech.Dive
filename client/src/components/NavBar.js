@@ -12,7 +12,7 @@ const Container = styled.div.attrs({
 `;
 
 const Nav = styled.nav.attrs({
-  className: 'navbar navbar-expand-lg navbar-dark bg-dark',
+  className: 'navbar navbar-expand-lg navbar-light bg-light',
 })`
   margin-bottom: 20px;
 
@@ -23,13 +23,18 @@ const Nav = styled.nav.attrs({
 
 const navBarItems = [
   {
-    name: 'Items',
-    toPathname: '/items',
+    name: 'Index',
+    toPathname: '/',
     className: 'nav-link',
   },
   {
-    name: 'Create Item',
+    name: 'Administration',
     toPathname: '/item/create',
+    className: 'nav-link',
+  },
+  {
+    name: 'Details',
+    toPathname: '/items',
     className: 'nav-link',
   },
 ];
