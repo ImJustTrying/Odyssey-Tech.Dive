@@ -147,6 +147,7 @@ class ItemsPlain extends Component {
                   <DeleteButton id={item._id} onDelete={this.handleRemoveItem} />
                 </ButtonsWrapper>
               </ItemContainer>
+  
             ))
           : `No items to render... :(`}
       </Wrapper>

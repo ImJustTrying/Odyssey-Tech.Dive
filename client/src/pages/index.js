@@ -9,5 +9,5 @@ export {
     Items,
     ItemsList,
     ItemsPlain,
-    ItemUpdate
+    ItemUpdate,
 };

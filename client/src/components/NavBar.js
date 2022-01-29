@@ -33,7 +33,7 @@ const navBarItems = [
   },
   {
     name: 'Details',
-    toPathname: '/items',
+    toPathname: '/item/:id',
     className: 'nav-link',
   },
 ];

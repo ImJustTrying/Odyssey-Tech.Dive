@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-
-import { routes } from '../constants';
-
-import { Button } from '@material-ui/core';
+import {routes} from '../constants';
+import {Button} from '@material-ui/core';
 import styled from 'styled-components';
-
-import { ItemsList, ItemsPlain } from '../pages';
+import {ItemsList, ItemsPlain} from '../pages';
 
 const LinksGridContainer = styled.div`
   display: grid;
@@ -32,13 +29,12 @@ const itemsPageVariants = [
   {
     name: 'Items (with only styled-components)',
     toPathname: `${routes.ITEMS}/items-plain`,
-    pageComponent: ItemsPlain,
+    pageComponent: ItemsList,
   },
 ];
 
 class Items extends Component {
   render() {
-    // TODO: would be better to dynamically create the routes based on page variations
     const itemsPages = (
       <Switch>
         <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} />

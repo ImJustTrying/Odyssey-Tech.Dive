@@ -1,5 +1,5 @@
 import React from 'react';
-import {ItemsList} from '../pages';
+import {ItemsList } from '../pages';
 
 
 const Welcome = () => (
