@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { shared } from '../constants';
+import {shared} from '../constants';
 import api from '../api';
-
 import styled from 'styled-components';
 
 const Title = styled.h1.attrs({
@@ -174,7 +173,7 @@ class ItemInsert extends Component {
 
     return (
       <Wrapper>
-        <Title>Create Item</Title>
+        <Title>Enter Exam Record</Title>
 
         <Label>Name: </Label>
         <InputText type="text" value={name} onChange={this.handleChangeInputName} />

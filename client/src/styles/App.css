@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.app--logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .app--logo {
-    animation: app--logo-spin infinite 20s linear;
-  }
-}
-
 .app--header {
   background-color: #282c34;
   min-height: 100vh;
@@ -21,18 +10,15 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-@keyframes app--logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  color: rgb(226, 75, 75);
 }
 
 .view-container {
     overflow: auto;
+}
+.desc {
+  text-align: center;
+    width: 40%;
+    font-size: 150%;
+    margin-left: 31%;
 }

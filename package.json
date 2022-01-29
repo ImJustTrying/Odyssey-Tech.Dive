@@ -1,7 +1,7 @@
 {
     "name": "react-redux-template",
     "description": "An example app using the MERN stack, with the main branch using React and Redux.",
-    "version": "0.1.0",
+    "version": "1.22.17",
     "private": true,
     "engines": {
         "node": ">=10.14.2",
@@ -31,7 +31,12 @@
         "@upstatement/prettier-config": "^0.3.0"
     },
     "dependencies": {
+        "@material-ui/core": "^4.12.3",
+        "@material-ui/icons": "^4.11.2",
+        "material-ui-icons": "^1.0.0-beta.36",
+        "mdbreact": "^5.2.0",
         "node-notifier": "^8.0.1",
         "object-path": "^0.11.5"
-    }
+    },
+    "packageManager": "yarn@3.1.1"
 }

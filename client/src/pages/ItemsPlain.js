@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
-
 import styled from 'styled-components';
 
 const generateRandomImageWidth = () => {
@@ -148,6 +147,7 @@ class ItemsPlain extends Component {
                   <DeleteButton id={item._id} onDelete={this.handleRemoveItem} />
                 </ButtonsWrapper>
               </ItemContainer>
+  
             ))
           : `No items to render... :(`}
       </Wrapper>
