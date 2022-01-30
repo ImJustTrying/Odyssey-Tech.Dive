@@ -4,6 +4,14 @@
 /node_modules
 /.pnp
 .pnp.js
+/server/node_modules
+/client/node_modules
+/server/.yarn
+/client/.yarn
+/.yarn
+/node_modules
+/.yarnrc.yml
+/package-lock.json
 
 # testing
 /coverage
