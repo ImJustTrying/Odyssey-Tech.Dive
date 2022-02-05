@@ -49,6 +49,10 @@ getFilteredItems = async (req, res) => {
     // This will filter the document for any objects where the name field contains data that
     // contains req.query.name, ignoring case.
     query_obj.name = new RegExp(req.query.name, 'i');
+  } if (req.query.content) {
+    query_obj.content = new RegExp(req.query.content, 'i');
+  } if (req.query.tfnote) {
+    query_obj.timeframeNote = new RegExp(req.query.tfnote, 'i');
   }
 
   await Item.find(query_obj, default_get_callback("getFilteredItems", false, res))
