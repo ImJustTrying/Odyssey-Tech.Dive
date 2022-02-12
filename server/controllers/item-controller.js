@@ -1,60 +1,63 @@
 /* eslint-disable no-undef, arrow-body-style */
 const Item = require('../models/item-model');
-
-getItems = async (req, res) => {
-  await Item.find({}, (err, items) => {
-    if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'getItems': ${err}`);
-      return res.status(400).json({
-        success: false,
-        error: err,
-      });
-    }
-    if (!items.length) {
-      console.error(`[Hack.Diversity React Template] - 404 in 'getItems': Items not found`);
-      return res.status(200).json({
-        success: true,
-        items: [],
-      });
-    }
-    console.log(`[Hack.Diversity React Template] - 200 in 'getItems': Items fetched!`);
-    return res.status(200).json({
-      success: true,
-      items: items,
-    });
-  }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'getItems': ${err}`);
-    console.error(err);
-    return res.status(404).json({
+const default_get_callback = (function_name, only_first, res) => (err, items) => {
+  if (err) {
+    console.error(`[Hack.Diversity React Template] - 400 in '${function_name}': ${err}`);
+    throw res.status(400).json({
       success: false,
       error: err,
     });
+  }
+  if (!items.length) {
+    console.error(`[Hack.Diversity React Template] - 404 in '${function_name}': Item not found`);
+    return res.status(404).json({
+      success: false,
+      error: 'Item not found',
+    });
+  }
+  console.log(`[Hack.Diversity React Template] - 200 in '${function_name}': Item fetched!`);
+  let json_obj = { success: true };
+  if (only_first) {
+    json_obj.item = items[0];
+  } else {
+    json_obj.items = items;
+  }
+  return res.status(200).json(json_obj);
+};
+
+getItems = async (req, res) => {
+  await Item.find({}, default_get_callback("getItems", false, res))
+  .catch(err => {
+    console.error(`[Hack.Diversity React Template] - caught error in '${function_name}': ${err}`);
+    console.error(err);
+    return err;
   });
 };
 
 getItemById = async (req, res) => {
-  await Item.find({ _id: req.params.id }, (err, items) => {
-    if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'getItemById': ${err}`);
-      throw res.status(400).json({
-        success: false,
-        error: err,
-      });
-    }
-    if (!items.length) {
-      console.error(`[Hack.Diversity React Template] - 404 in 'getItemById': Item not found`);
-      return res.status(404).json({
-        success: false,
-        error: 'Item not found',
-      });
-    }
-    console.log(`[Hack.Diversity React Template] - 200 in 'getItemById': Item fetched!`);
-    return res.status(200).json({
-      success: true,
-      item: items[0],
-    });
-  }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'getItemById': ${err}`);
+  await Item.find({ _id: req.params.id }, default_get_callback("getItemById", true, res))
+  .catch(err => {
+    console.error(`[Hack.Diversity React Template] - caught error in '${function_name}': ${err}`);
+    console.error(err);
+    return err;
+  });
+};
+
+getFilteredItems = async (req, res) => {
+  let query_obj = {};
+  if (req.query.name) {
+    // This will filter the document for any objects where the name field contains data that
+    // contains req.query.name, ignoring case.
+    query_obj.name = new RegExp(req.query.name, 'i');
+  } if (req.query.content) {
+    query_obj.content = new RegExp(req.query.content, 'i');
+  } if (req.query.tfnote) {
+    query_obj.timeframeNote = new RegExp(req.query.tfnote, 'i');
+  }
+
+  await Item.find(query_obj, default_get_callback("getFilteredItems", false, res))
+  .catch(err => {
+    console.error(`[Hack.Diversity React Template] - caught error in '${function_name}': ${err}`);
     console.error(err);
     return err;
   });
@@ -188,6 +191,7 @@ deleteItem = async (req, res) => {
 module.exports = {
   getItems,
   getItemById,
+  getFilteredItems,
   createItem,
   updateItem,
   deleteItem,
