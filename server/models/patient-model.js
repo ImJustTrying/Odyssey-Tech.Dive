@@ -9,7 +9,7 @@ const Patient = new Schema({
     zip: Number,
     latestBMI: Number,
     latestWeight: Number,
-    latestHeight: { feet: Number, inches: Number },
+    latestHeight: String,
     // Medical history
     tuberculosis: Boolean,
     systemicLupusErythmatosus: Boolean,
@@ -28,6 +28,7 @@ const Patient = new Schema({
     diabetesType2: Boolean,
     transplant: Boolean,
     hemodialysisPreDiagnosis: Boolean,
+    hemodialysisPostDiagnosis: Boolean,
     cancer: Boolean,
     // Covid related history
     covidTestPositive: Boolean,

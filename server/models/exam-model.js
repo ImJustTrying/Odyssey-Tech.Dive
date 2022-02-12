@@ -8,7 +8,9 @@ const Exam = new Schema({
     imageStudyDescription: String,
     studyModality: String,
     FIO2AtTimeOfImageStudy: Number,
-    keyFindings: String
+    keyFindings: String,
+    imageFilename: String,
+    examID: String
 });
 
 module.exports = mongoose.model('exam', Exam);

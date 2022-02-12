@@ -27,11 +27,20 @@ const default_get_callback = (function_name, only_first, res) => (err, patients)
 getPatients = async (req, res) => {
   await Patient.find({}, default_get_callback("getPatients", false, res))
   .catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in '${function_name}': ${err}`);
+    console.error(`[Hack.Diversity React Template] - caught error in '${arguments.callee.name}': ${err}`);
     console.error(err);
     return err;
   });
 };
+
+getFilteredPatients = async (req, res) => {
+  await Patient.find({}, default_get_callback("getFilteredPatients", false, res))
+  .catch(err => {
+    console.error(`[Hack.Diversity React Template] - caught error in '${arguments.callee.name}': ${err}`);
+    console.error(err);
+    return err;
+  });
+}
 
 createPatient = (req, res) => {
   const body = req.body;

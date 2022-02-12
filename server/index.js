@@ -6,6 +6,7 @@ const cors = require('cors');
 const db = require('./db');
 const itemRouter = require('./routes/item-router');
 const patientRouter = require('./routes/patient-router');
+const examRouter = require('./routes/exam-router');
 
 const app = express();
 const apiPort = 3000;
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', itemRouter);
 app.use('/api', patientRouter);
+app.use('/api', examRouter);
 
 app.listen(apiPort, () => {
     console.log(`[Hack.Diversity React Template] - Server running on port ${apiPort}`);
