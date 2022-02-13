@@ -17,7 +17,7 @@ class App extends Component {
     const publicViews = (
       <Switch>
         <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
-        <Route exact path={routes.HOME} component={Welcome} />
+        {/* <Route exact path={routes.HOME} component={Welcome} />  */}
         <Route exact path={routes.ITEMS} component={Items} />
         <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
