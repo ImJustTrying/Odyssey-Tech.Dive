@@ -1,4 +1,4 @@
-const Patient = require('../models/patient');
+const Patient = require('../models/patient-model');
 const default_get_callback = (function_name, only_first, res) => (err, patients) => {
   if (err) {
     console.error(`[Hack.Diversity React Template] - 400 in '${function_name}': ${err}`);
