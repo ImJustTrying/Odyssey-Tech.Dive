@@ -85,7 +85,55 @@ class ItemUpdate extends Component {
         return err;
       });
   };
+  state = {
+    selectedFile: null
+  };
 
+  // On file select (from the pop up)
+ onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  // On file upload (click the upload button)
+  onFileUpload = () => {
+    // Create an object of formData
+    const formData = new FormData();
+
+    // Update the formData object
+    formData.append(
+      "myFile",
+      this.state.selectedFile,
+      this.state.selectedFile.name
+    );
+
+    // Details of the uploaded file
+    console.log(this.state.selectedFile);
+
+    // Request made to the backend api
+    // Send formData object
+    axios.post("api/uploadfile", formData);
+  };
+
+  // File content to be displayed after
+  // file upload is complete
+  fileData = () => {
+    if (this.state.selectedFile) {
+      return (
+        (null)
+      );
+    } 
+
+  };
+  // File content to be displayed after
+  // file upload is complete
+  fileData = () => {
+    if (this.state.selectedFile) {
+      return (
+        (null)
+      );
+    } 
+  }
   handleChangeInputFirstName = async event => {
     const firstName = event.target.value;
     this.setState({ firstName });
@@ -146,8 +194,8 @@ class ItemUpdate extends Component {
 
 
   handleUpdateItem = event => {
-    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix } = this.state;
-    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix };
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, selectedFile } = this.state;
+    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, selectedFile };
 
     return this.updateSingleItem(item)
       .then(resp => {
@@ -174,7 +222,7 @@ class ItemUpdate extends Component {
   };
 
   render() {
-    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix } = this.state;
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, selectedFile } = this.state;
 
     return (
       _id && (
@@ -225,6 +273,10 @@ class ItemUpdate extends Component {
 
         <Label>Key Findings: </Label>
         <InputText type="textarea" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
+
+        <input type="file" value={selectedFile} onChange={this.onFileChange} />
+        <button onClick={this.onFileUpload}>Upload</button> 
+       
 
           <Button onClick={this.confirmUpdateItem}>Update Item</Button>
           <CancelButton href={'/items'}>Cancel</CancelButton>

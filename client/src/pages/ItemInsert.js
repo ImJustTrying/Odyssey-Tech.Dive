@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {shared} from '../constants';
 import api from '../api';
+import axios from "axios";
 import styled from 'styled-components';
 import { Upload } from '.';
 
@@ -37,20 +38,6 @@ const InputText = styled.input.attrs({
   }
 `;
 
-const Fieldset = styled.fieldset.attrs({
-  className: 'form-control',
-})`
-  background-color: transparent;
-  border-color: transparent;
-  margin: 1em auto 0.5em;
-  max-width: 50%;
-  min-height: 6em;
-
-  @media screen and (max-width: 420px) {
-    height: auto;
-    max-width: 75%;
-  }
-`;
 
 const Button = styled.button.attrs({
   className: 'btn btn-primary',
@@ -76,13 +63,64 @@ class ItemInsert extends Component {
       address: '',
       hoursAd: '',
       brix:'',
+      imageName:'',
     };
   }
+  state = {
+    // Initially, no file is selected
+    selectedFile: null
+  };
 
+  // On file select (from the pop up)
+ onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  // On file upload (click the upload button)
+  onFileUpload = () => {
+    // Create an object of formData
+    const formData = new FormData();
+
+    // Update the formData object
+    formData.append(
+      "myFile",
+      this.state.selectedFile,
+      this.state.selectedFile.name
+    );
+
+    // Details of the uploaded file
+    console.log(this.state.selectedFile);
+
+    // Request made to the backend api
+    // Send formData object
+    axios.post("api/uploadfile", formData);
+  };
+
+  // File content to be displayed after
+  // file upload is complete
+  fileData = () => {
+    if (this.state.selectedFile) {
+      return (
+        (null)
+      );
+    } 
+
+  };
+  // File content to be displayed after
+  // file upload is complete
+  fileData = () => {
+    if (this.state.selectedFile) {
+      return (
+        (null)
+      );
+    } 
+  }
   handleChangeInputFirstName = async event => {
     const firstName = event.target.value;
     this.setState({ firstName });
   };
+ 
   handleChangeInputLastName = async event => {
     const lastName = event.target.value;
     this.setState({ lastName });
@@ -92,12 +130,6 @@ class ItemInsert extends Component {
     const age = event.target.value;
     this.setState({ age });
   };
-
-/*  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
-    this.setState({ priority });
-  };
-  */
 
   handleChangeInputZipCode = async event => {
     const zipCode = event.target.value;
@@ -145,8 +177,8 @@ class ItemInsert extends Component {
   handleInsertItem = event => {
     event.preventDefault();
 
-    const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix } = this.state;
-    const item = {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix };
+    const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
+    const item = {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName };
 
     this.insertSingleItem(item)
       .then(resp => {
@@ -163,6 +195,7 @@ class ItemInsert extends Component {
             address: '',
             hoursAd: '',
             brix:'',
+            imageName:'',
 
           });
         } else {
@@ -178,7 +211,7 @@ class ItemInsert extends Component {
   };
 
   render() {
-    const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix } = this.state;
+    const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName} = this.state;
     return (
     <Wrapper>
         <Title>Enter Exam Record</Title>
@@ -227,7 +260,12 @@ class ItemInsert extends Component {
 
         <Label>Key Findings: </Label>
         <InputText type="textarea" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
-        <Upload></Upload>
+
+        <input type="file" value={imageName} onChange={this.onFileChange} />
+        <button onClick={this.onFileUpload}>Upload</button> 
+       
+
+
         <Button onClick={this.handleInsertItem}>Add Item</Button>
         <CancelButton href={'/items'}>Cancel</CancelButton>
       </Wrapper>

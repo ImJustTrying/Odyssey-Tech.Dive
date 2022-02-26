@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { Component } from "react";
 
-class App extends Component {
+class Upload extends Component {
   state = {
     // Initially, no file is selected
     selectedFile: null
   };
 
   // On file select (from the pop up)
-  onFileChange = (event) => {
+ onFileChange = (event) => {
     // Update the state
     this.setState({ selectedFile: event.target.files[0] });
   };
@@ -43,6 +43,16 @@ class App extends Component {
     } 
 
   };
+  // File content to be displayed after
+  // file upload is complete
+  fileData = () => {
+    if (this.state.selectedFile) {
+      return (
+        (null)
+      );
+    } 
+
+  };
 
   render() {
     return (
@@ -60,4 +70,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Upload;
