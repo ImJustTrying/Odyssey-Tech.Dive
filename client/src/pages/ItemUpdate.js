@@ -35,13 +35,6 @@ const Fieldset = styled.fieldset.attrs({
   min-height: 6em;
 `;
 
-const DayInput = styled.input.attrs({
-  className: '',
-})`
-  margin: 5px auto;
-  text-align: center;
-`;
-
 const Button = styled.button.attrs({
   className: 'btn btn-primary',
 })`
@@ -59,11 +52,14 @@ class ItemUpdate extends Component {
     super(props);
     this.state = {
       _id: '',
-      name: '',
-      daysOfWeek: {},
-      timeframeNote: '',
-      priority: 0,
-      content: '',
+      firstName: '',
+      lastName: '',
+      age: 0,
+      zipCode: '',
+      keyFindings: '',
+      address: '',
+      hoursAd: '',
+      brix:'',
     };
   }
 
@@ -90,25 +86,45 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputName = async event => {
-    const name = event.target.value;
-    this.setState({ name });
+  handleChangeInputFirstName = async event => {
+    const firstName = event.target.value;
+    this.setState({ firstName });
+  };
+  handleChangeInputLastName = async event => {
+    const lastName = event.target.value;
+    this.setState({ lastName });
   };
 
-  handleChangeDays = async event => {
-    const { checked } = event.target;
-    const { dayIndex } = event.target.dataset;
-    const { daysOfWeek } = this.state;
-    const { DAYS_OF_WEEK } = shared;
-
-    if (checked && !daysOfWeek[dayIndex]) {
-      daysOfWeek[dayIndex] = DAYS_OF_WEEK[dayIndex];
-    } else if (!checked && daysOfWeek[dayIndex]) {
-      delete daysOfWeek[dayIndex];
-    }
-    this.setState({ daysOfWeek: daysOfWeek });
+  handleChangeInputAge = async event => {
+    const age = event.target.value;
+    this.setState({ age });
   };
 
+  handleChangeInputZipCode = async event => {
+    const zipCode = event.target.value;
+    this.setState({ zipCode });
+  };
+
+  handleChangeInputKeyFindings = async event => {
+    const keyFindings = event.target.value;
+    this.setState({ keyFindings });
+  };
+
+  handleChangeInputAddress = async event => {
+    const address = event.target.value;
+    this.setState({ address });
+  };
+  handleChangeInputHoursAd = async event => {
+    const hoursAd = event.target.value;
+    this.setState({ hoursAd });
+  };
+
+ handleChangeInputBrix = async event => {
+    const brix = event.target.value;
+    this.setState({ brix });
+  };
+  
+  
   updateSingleItem = item => {
     return api
       .updateItemById(item._id, item)
@@ -128,25 +144,10 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputTimeframe = async event => {
-    const timeframeNote = event.target.value;
-    this.setState({ timeframeNote });
-  };
-
-  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
-
-    this.setState({ priority });
-  };
-
-  handleChangeInputContent = async event => {
-    const content = event.target.value;
-    this.setState({ content });
-  };
 
   handleUpdateItem = event => {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-    const item = { _id, name, daysOfWeek, timeframeNote, priority, content };
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix } = this.state;
+    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix };
 
     return this.updateSingleItem(item)
       .then(resp => {
@@ -173,53 +174,57 @@ class ItemUpdate extends Component {
   };
 
   render() {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-
-    const { DAYS_OF_WEEK } = shared;
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix } = this.state;
 
     return (
       _id && (
         <Wrapper>
-          <Title>Enter Record </Title>
+        <Title>Enter Exam Record</Title>
+        <Label>First Name: </Label>
+        <InputText type="text" value={firstName} onChange={this.handleChangeInputFirstName} />
+        <Label>Last Name: </Label>
+        <InputText type="text" value={lastName} onChange={this.handleChangeInputLastName} />
+        <Label>Address: </Label>
+        <InputText type="text" value={address} onChange={this.handleChangeInputAddress} />
+        <Label>ZIP Code: </Label>
+        <InputText type="number" value={zipCode} onChange={this.handleChangeInputZipCode} />
 
-          <Label>Name: </Label>
-          <InputText type="text" value={name} onChange={this.handleChangeInputName} />
+        <Label>Age: </Label>
+        <InputText
+          type="number"
+          step="1"
+          lang="en-US"
+          min="0"
+          max="100"
+          pattern="[0-9]+([,\.][0-9]+)?"
+          value={age}
+          onChange={this.handleChangeInputAge}
+        />
 
-          <Fieldset>
-            <legend>Day(s) of the Week: </legend>
-            {Object.keys(DAYS_OF_WEEK).map((dayInt, i) => (
-              <React.Fragment key={DAYS_OF_WEEK[dayInt]}>
-                <DayInput
-                  type="checkbox"
-                  id={DAYS_OF_WEEK[dayInt]}
-                  className="day-checkbox-input"
-                  defaultValue={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                  data-day-index={dayInt}
-                  onChange={this.handleChangeDays}
-                  defaultChecked={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                />
-                <Label htmlFor={DAYS_OF_WEEK[dayInt]}>{DAYS_OF_WEEK[dayInt]}</Label>
-              </React.Fragment>
-            ))}
-          </Fieldset>
+        <Label>Hours Since Admission: </Label>
+        <InputText
+          type="number"
+          step="1"
+          lang="en-US"
+          min="0"
+          max="100"
+          pattern="[0-9]+([,\.][0-9]+)?"
+          value={hoursAd}
+          onChange={this.handleChangeInputHoursAd}
+        />
 
-          <Label>Timeframe Note: </Label>
-          <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
+   <Label>Brixia Score: </Label>
+        <InputText
+          type="number"
+          lang="en-US"
+          min="1"
+          max="2"
+          value={brix}
+          onChange={this.handleChangeInputBrix}
+        />
 
-          <Label>Priority: </Label>
-          <InputText
-            type="number"
-            step="0.1"
-            lang="en-US"
-            min="0"
-            max="1000"
-            pattern="[0-9]+([,\.][0-9]+)?"
-            value={priority}
-            onChange={this.handleChangeInputPriority}
-          />
-
-          <Label>Content: </Label>
-          <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
+        <Label>Key Findings: </Label>
+        <InputText type="textarea" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
 
           <Button onClick={this.confirmUpdateItem}>Update Item</Button>
           <CancelButton href={'/items'}>Cancel</CancelButton>
