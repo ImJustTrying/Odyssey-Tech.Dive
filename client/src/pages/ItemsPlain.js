@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
+
 import styled from 'styled-components';
 
 const generateRandomImageWidth = () => {
@@ -27,7 +28,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 0 40px 40px 40px;
-
   @media screen and (max-width: 420px) {
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -147,7 +147,6 @@ class ItemsPlain extends Component {
                   <DeleteButton id={item._id} onDelete={this.handleRemoveItem} />
                 </ButtonsWrapper>
               </ItemContainer>
-  
             ))
           : `No items to render... :(`}
       </Wrapper>
