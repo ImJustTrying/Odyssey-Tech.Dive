@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Patient = new Schema({
-    patientID: String,
+    patientID: String, // This is a unique identifier
     age: Number,
     sex: String, // Either M or F
     race: String,
@@ -37,5 +37,7 @@ const Patient = new Schema({
     ICUAdmits: Number,
     mortality: Boolean
 }); 
+
+Patient.index({patientID: 1}, {unique: true});
 
 module.exports = mongoose.model('patient', Patient);
