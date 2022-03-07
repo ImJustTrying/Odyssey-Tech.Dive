@@ -68,36 +68,57 @@ class ItemsTable extends Component {
   componentDidMount() {
     console.log('ItemsList: props');
     console.log(this.props);
+    this.fetchAllExams();
+    // this.fetchAllItems();
 
-    this.fetchAllItems();
   }
 
-  fetchAllItems = () => {
-    api
-      .getAllItems()
-      .then(resp => {
-        const { items } = resp.data;
-        console.log('getAllItems: resp');
-        console.log(items);
-        this.setState({ items });
-      })
-      .catch(err => {
-        console.error(`ERROR in 'getAllItems': ${err}`);
-        console.error(err);
-        return err;
-      });
-  };
+  fetchAllExams = () => {
+    api.getAllExams().then(resp => {
+      // const { items } = resp.data;
+      const exams = {};
+      console.log('getAllExams: resp');
+        //items shows up as undefined in console
+        for(var i = 0; i < resp.data.exams.length; i++){
+                 exams[i] = resp.data.exams[0];
+        }
+        console.log(exams);
+        // this.setState({ items });
+        this.setState({exams});
+    }
+      ).catch(err => {
+        console.error(`Error in 'getAllExams' : ${err}`)
+        console.log(err);
+      }
+      
+      );
+  }
+  // fetchAllItems = () => {
+  //   api
+  //     .getAllItems()
+  //     .then(resp => {
+  //       const { items } = resp.data;
+  //       console.log('getAllItems: resp');
+  //       console.log(items);
+  //       this.setState({ items });
+  //     })
+  //     .catch(err => {
+  //       console.error(`ERROR in 'getAllItems': ${err}`);
+  //       console.error(err);
+  //       return err;
+  //     });
+  // };
 
   deleteSingleItem = itemId => {
     return api
-      .deleteItemById(itemId)
+      .deleteExamById(itemId)
       .then(resp => {
-        console.log('deleteItemById: resp');
+        console.log('deleteExamById: resp');
         console.log(resp);
         return resp;
       })
       .catch(err => {
-        console.error(`ERROR in 'deleteSingleItem': ${err}`);
+        console.error(`ERROR in 'deleteSingleExam': ${err}`);
         console.error(err);
         return err;
       });
@@ -107,19 +128,31 @@ class ItemsTable extends Component {
     const itemId = data;
 
     this.deleteSingleItem(itemId).then(resp => {
-      console.log('handleRemoveItem: resp');
+      console.log('handleRemoveExam: resp');
       console.log(resp);
-      this.fetchAllItems();
+      this.fetchAllExams();
     });
   };
 
   render() {
     const items = this.state.items || {};
     console.log(items);
+    //get exams
+    // const exams = {};
+    // api.getAllExams().then(resp => {
+    //     //console.log(resp.data.exams);
+    //     //after recieving promise, iterate through data.exams
+    //     //push values into array
+    //     for(var i = 0; i < resp.data.exams.length; i++){
+    //       exams[i] = resp.data.exams[0];
+    //     }
+    // })
+    // console.log('Showing exam data');
+    //  console.log(exams);
 
     const columns = [
       {
-        Header: 'ID',
+        Header: 'Patient ID',
         accessor: '_id',
         // filterable: true,
         Cell: props => {
@@ -129,53 +162,53 @@ class ItemsTable extends Component {
         },
       },
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Exam ID',
+        accessor: 'examID',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-name={original.name}>{props.value}</span>;
+          return <span data-name={original.examID}>{props.value}</span>;
         },
       },
+      // {
+      //   Header: 'Day(s)',
+      //   accessor: 'daysOfWeek',
+      //   // filterable: true,
+      //   Cell: props => {
+      //     const { daysOfWeek } = props.cell.row.original;
+      //     let daysToDisplay = '';
+      //     if (daysOfWeek && typeof daysOfWeek === 'object') {
+      //       for (const day in daysOfWeek) {
+      //         daysToDisplay =
+      //           daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
+      //       }
+      //     }
+      //     return (
+      //       <span
+      //         data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
+      //         data-daysofweek-by-id={props.value}>
+      //         {daysToDisplay || '-'}
+      //       </span>
+      //     );
+      //   },
+      // },
       {
-        Header: 'Day(s)',
-        accessor: 'daysOfWeek',
-        // filterable: true,
-        Cell: props => {
-          const { daysOfWeek } = props.cell.row.original;
-          let daysToDisplay = '';
-          if (daysOfWeek && typeof daysOfWeek === 'object') {
-            for (const day in daysOfWeek) {
-              daysToDisplay =
-                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
-            }
-          }
-          return (
-            <span
-              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
-              data-daysofweek-by-id={props.value}>
-              {daysToDisplay || '-'}
-            </span>
-          );
-        },
-      },
-      {
-        Header: 'Timeframe',
-        accessor: 'timeframeNote',
-        Cell: props => {
-          const { original } = props.cell.row;
-          return <span data-timeframe={original.timeframeNote}>{props.value || '-'}</span>;
-        },
-      },
-      {
-        Header: 'Priority',
-        accessor: 'priority',
-        // filterable: true,
+        Header: 'Image',
+        accessor: 'imageFilename',
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-priority={original.priority}>{props.value}</span>;
+          return <span data-timeframe={original.imageFilename}>{props.value || '-'}</span>;
         },
       },
+      // {
+      //   Header: 'Priority',
+      //   accessor: 'priority',
+      //   // filterable: true,
+      //   Cell: props => {
+      //     const { original } = props.cell.row;
+      //     return <span data-priority={original.priority}>{props.value}</span>;
+      //   },
+      // },
       {
         Header: 'Update',
         accessor: '_update',
@@ -183,7 +216,7 @@ class ItemsTable extends Component {
           const { original } = props.cell.row;
 
           return (
-            <Link data-update-id={original._id} to={`/item/update/${original._id}`}>
+            <Link data-update-id={original._id} to={`/exam/update/${original._id}`}>
               Update
             </Link>
           );
@@ -208,9 +241,10 @@ class ItemsTable extends Component {
         <CssBaseline />
         {(items || []).length > 0 ? (
           <Table data={items} columns={columns} />
-        ) : (
+         ) : (
           `No items to render... :(`
-        )}
+          
+        )}  
       </Wrapper>
     );
   }
