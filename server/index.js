@@ -25,6 +25,8 @@ app.use('/api', itemRouter);
 app.use('/api', patientRouter);
 app.use('/api', examRouter);
 
-app.listen(apiPort, () => {
+const server = app.listen(apiPort, () => {
     console.log(`[Hack.Diversity React Template] - Server running on port ${apiPort}`);
 });
+
+module.exports = server;
