@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../api';
-import { shared } from '../constants';
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -13,27 +13,6 @@ const Wrapper = styled.div.attrs({
   margin-top: 0 30px;
 `;
 
-const Label = styled.label`
-  margin: 5px;
-  max-width: 30%;
-`;
-
-const InputText = styled.input.attrs({
-  className: 'form-control',
-})`
-  margin: 5px auto;
-  max-width: 30%;
-  text-align: center;
-`;
-
-const Fieldset = styled.fieldset.attrs({
-  className: 'form-control',
-})`
-  border-color: transparent;
-  margin: 1em auto 0.5em;
-  max-width: 50%;
-  min-height: 6em;
-`;
 
 const Button = styled.button.attrs({
   className: 'btn btn-primary',
@@ -85,55 +64,7 @@ class ItemUpdate extends Component {
         return err;
       });
   };
-  state = {
-    selectedFile: null
-  };
-
-  // On file select (from the pop up)
- onFileChange = (event) => {
-    // Update the state
-    this.setState({ selectedFile: event.target.files[0] });
-  };
-
-  // On file upload (click the upload button)
-  onFileUpload = () => {
-    // Create an object of formData
-    const formData = new FormData();
-
-    // Update the formData object
-    formData.append(
-      "myFile",
-      this.state.selectedFile,
-      this.state.selectedFile.name
-    );
-
-    // Details of the uploaded file
-    console.log(this.state.selectedFile);
-
-    // Request made to the backend api
-    // Send formData object
-    axios.post("api/uploadfile", formData);
-  };
-
-  // File content to be displayed after
-  // file upload is complete
-  fileData = () => {
-    if (this.state.selectedFile) {
-      return (
-        (null)
-      );
-    } 
-
-  };
-  // File content to be displayed after
-  // file upload is complete
-  fileData = () => {
-    if (this.state.selectedFile) {
-      return (
-        (null)
-      );
-    } 
-  }
+ 
   handleChangeInputFirstName = async event => {
     const firstName = event.target.value;
     this.setState({ firstName });
@@ -171,7 +102,10 @@ class ItemUpdate extends Component {
     const brix = event.target.value;
     this.setState({ brix });
   };
-  
+  handleChangeInputImageName = async event => {
+    const imageName = event.target.value;
+    this.setState({ imageName });
+  };
   
   updateSingleItem = item => {
     return api
@@ -194,8 +128,8 @@ class ItemUpdate extends Component {
 
 
   handleUpdateItem = event => {
-    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, selectedFile } = this.state;
-    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, selectedFile };
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
+    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName };
 
     return this.updateSingleItem(item)
       .then(resp => {
@@ -222,23 +156,65 @@ class ItemUpdate extends Component {
   };
 
   render() {
-    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, selectedFile } = this.state;
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
 
     return (
       _id && (
         <Wrapper>
         <Title>Enter Exam Record</Title>
-        <Label>First Name: </Label>
-        <InputText type="text" value={firstName} onChange={this.handleChangeInputFirstName} />
-        <Label>Last Name: </Label>
-        <InputText type="text" value={lastName} onChange={this.handleChangeInputLastName} />
-        <Label>Address: </Label>
-        <InputText type="text" value={address} onChange={this.handleChangeInputAddress} />
-        <Label>ZIP Code: </Label>
-        <InputText type="number" value={zipCode} onChange={this.handleChangeInputZipCode} />
+        <br></br>
 
-        <Label>Age: </Label>
-        <InputText
+        <TextField type="text"     
+        value={firstName} onChange={this.handleChangeInputFirstName} 
+        label="First Name" InputLabelProps={{
+        style: { color: '#22577E' },
+        }}
+        className="txtfield" 
+        variant="filled"/>
+
+        <br></br>
+        <br></br>
+
+        <TextField type="text" value={lastName} 
+        onChange={this.handleChangeInputLastName} 
+        label="Last Name"
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />       
+        <br></br>
+        <br></br>
+
+        <TextField type="text"
+          value={address}
+          onChange={this.handleChangeInputAddress}
+          label="Address" 
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />       
+        <br></br>
+        <br></br>
+
+        <TextField type="number"
+          value={zipCode} 
+          onChange={this.handleChangeInputZipCode}
+          label = "ZIP Code"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />
+        <br></br>
+        <br></br>
+
+        <TextField
+          label = "Age"
           type="number"
           step="1"
           lang="en-US"
@@ -247,39 +223,87 @@ class ItemUpdate extends Component {
           pattern="[0-9]+([,\.][0-9]+)?"
           value={age}
           onChange={this.handleChangeInputAge}
-        />
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
 
-        <Label>Hours Since Admission: </Label>
-        <InputText
+        />
+        <br></br>
+        <br></br>
+        
+        <TextField
+          label = "Hours Since Admission"
           type="number"
           step="1"
           lang="en-US"
           min="0"
-          max="100"
+          max="99999"
           pattern="[0-9]+([,\.][0-9]+)?"
           value={hoursAd}
           onChange={this.handleChangeInputHoursAd}
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+
+        />
+       <br></br>
+       <br></br>
+
+        <TextField
+        label="Brixia Score"
+        variant="filled"
+
+        type="number"
+        min="1"
+        lang="en-US"  
+        pattern="[0-9]+([,\.][0-9]+)?"
+        value={brix}
+        onInput = {(e) =>{
+          e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,6);
+        }
+      }
+        onChange={this.handleChangeInputBrix}
+        className="txtfield"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
         />
 
-   <Label>Brixia Score: </Label>
-        <InputText
-          type="number"
-          lang="en-US"
-          min="1"
-          max="2"
-          value={brix}
-          onChange={this.handleChangeInputBrix}
+        <br></br>
+        <br></br>
+
+        <TextField type="textarea"
+         value={keyFindings}
+          onChange={this.handleChangeInputKeyFindings}
+          label="Key Findings"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
         />
-
-        <Label>Key Findings: </Label>
-        <InputText type="textarea" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
-
-        <input type="file" value={selectedFile} onChange={this.onFileChange} />
-        <button onClick={this.onFileUpload}>Upload</button> 
-       
+        <br></br>
+        <br></br>
+        
+        <TextField type="text"
+        value={imageName}
+        onChange={this.handleChangeInputImageName}
+        label="Insert Image Link" 
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />
+        <br></br>
+        <br></br>
 
           <Button onClick={this.confirmUpdateItem}>Update Item</Button>
-          <CancelButton href={'/items'}>Cancel</CancelButton>
+          <CancelButton href={'/'}>Cancel</CancelButton>
         </Wrapper>
       )
     );

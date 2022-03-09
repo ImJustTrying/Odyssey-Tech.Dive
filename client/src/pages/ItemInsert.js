@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import {shared} from '../constants';
 import api from '../api';
-import axios from "axios";
 import styled from 'styled-components';
-import { Upload } from '.';
+import { TextField } from '@material-ui/core';
 
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -66,56 +64,8 @@ class ItemInsert extends Component {
       imageName:'',
     };
   }
-  state = {
-    // Initially, no file is selected
-    selectedFile: null
-  };
-
-  // On file select (from the pop up)
- onFileChange = (event) => {
-    // Update the state
-    this.setState({ selectedFile: event.target.files[0] });
-  };
-
-  // On file upload (click the upload button)
-  onFileUpload = () => {
-    // Create an object of formData
-    const formData = new FormData();
-
-    // Update the formData object
-    formData.append(
-      "myFile",
-      this.state.selectedFile,
-      this.state.selectedFile.name
-    );
-
-    // Details of the uploaded file
-    console.log(this.state.selectedFile);
-
-    // Request made to the backend api
-    // Send formData object
-    axios.post("api/uploadfile", formData);
-  };
-
-  // File content to be displayed after
-  // file upload is complete
-  fileData = () => {
-    if (this.state.selectedFile) {
-      return (
-        (null)
-      );
-    } 
-
-  };
-  // File content to be displayed after
-  // file upload is complete
-  fileData = () => {
-    if (this.state.selectedFile) {
-      return (
-        (null)
-      );
-    } 
-  }
+  
+ 
   handleChangeInputFirstName = async event => {
     const firstName = event.target.value;
     this.setState({ firstName });
@@ -153,6 +103,16 @@ class ItemInsert extends Component {
  handleChangeInputBrix = async event => {
     const brix = event.target.value;
     this.setState({ brix });
+    };
+    
+    limitKeypress(event, value, maxLength) {
+      if (value != undefined && value.toString().length >= maxLength) {
+          event.preventDefault();
+      }
+  }
+  handleChangeInputImageName = async event => {
+    const imageName = event.target.value;
+    this.setState({ imageName });
   };
   
   insertSingleItem = item => {
@@ -203,7 +163,6 @@ class ItemInsert extends Component {
         }
       })
       .catch(err => {
-        // TODO: pass error object correctly so that things like validation errors can be displayed to user
         window.alert(`There was an error creating the item... :(`);
         console.log('handleInsertItem: err');
         console.log(err);
@@ -211,21 +170,64 @@ class ItemInsert extends Component {
   };
 
   render() {
+  
     const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName} = this.state;
     return (
     <Wrapper>
-        <Title>Enter Exam Record</Title>
-        <Label>First Name: </Label>
-        <InputText type="text" value={firstName} onChange={this.handleChangeInputFirstName} />
-        <Label>Last Name: </Label>
-        <InputText type="text" value={lastName} onChange={this.handleChangeInputLastName} />
-        <Label>Address: </Label>
-        <InputText type="text" value={address} onChange={this.handleChangeInputAddress} />
-        <Label>ZIP Code: </Label>
-        <InputText type="number" value={zipCode} onChange={this.handleChangeInputZipCode} />
+        <Title>Enter Exam Record</Title>       
+        <br></br>
 
-        <Label>Age: </Label>
-        <InputText
+        <TextField type="text"     
+        value={firstName} onChange={this.handleChangeInputFirstName} 
+        label="First Name" InputLabelProps={{
+        style: { color: '#22577E' },
+        }}
+        className="txtfield" 
+        variant="filled"/>
+
+        <br></br>
+        <br></br>
+
+        <TextField type="text" value={lastName} 
+        onChange={this.handleChangeInputLastName} 
+        label="Last Name"
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />       
+        <br></br>
+        <br></br>
+
+        <TextField type="text"
+          value={address}
+          onChange={this.handleChangeInputAddress}
+          label="Address" 
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />       
+        <br></br>
+        <br></br>
+
+        <TextField type="number"
+          value={zipCode} 
+          onChange={this.handleChangeInputZipCode}
+          label = "ZIP Code"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />
+        <br></br>
+        <br></br>
+
+        <TextField
+          label = "Age"
           type="number"
           step="1"
           lang="en-US"
@@ -234,43 +236,91 @@ class ItemInsert extends Component {
           pattern="[0-9]+([,\.][0-9]+)?"
           value={age}
           onChange={this.handleChangeInputAge}
-        />
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
 
-        <Label>Hours Since Admission: </Label>
-        <InputText
+        />
+        <br></br>
+        <br></br>
+        
+        <TextField
+          label = "Hours Since Admission"
           type="number"
           step="1"
           lang="en-US"
           min="0"
-          max="100"
+          max="99999"
           pattern="[0-9]+([,\.][0-9]+)?"
           value={hoursAd}
           onChange={this.handleChangeInputHoursAd}
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+
+        />
+       <br></br>
+       <br></br>
+
+        <TextField
+        label="Brixia Score"
+        variant="filled"
+
+        type="number"
+        min="1"
+        lang="en-US"  
+        pattern="[0-9]+([,\.][0-9]+)?"
+        value={brix}
+        onInput = {(e) =>{
+          e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,6);
+        }
+      }
+        onChange={this.handleChangeInputBrix}
+        className="txtfield"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
         />
 
-   <Label>Brixia Score: </Label>
-        <InputText
-          type="number"
-          lang="en-US"
-          min="1"
-          max="2"
-          value={brix}
-          onChange={this.handleChangeInputBrix}
+        <br></br>
+        <br></br>
+
+        <TextField type="textarea"
+         value={keyFindings}
+          onChange={this.handleChangeInputKeyFindings}
+          label="Key Findings"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
         />
-
-        <Label>Key Findings: </Label>
-        <InputText type="textarea" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
-
-        <input type="file" value={imageName} onChange={this.onFileChange} />
-        <button onClick={this.onFileUpload}>Upload</button> 
-       
-
+        <br></br>
+        <br></br>
+        
+        <TextField type="text"
+        value={imageName}
+        onChange={this.handleChangeInputImageName}
+        label="Insert Image Link" 
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />
+        <br></br>
+        <br></br>
 
         <Button onClick={this.handleInsertItem}>Add Item</Button>
-        <CancelButton href={'/items'}>Cancel</CancelButton>
+        <CancelButton href={'/'}>Cancel</CancelButton>
       </Wrapper>
     );
   }
+
 }
 
 export default ItemInsert;
