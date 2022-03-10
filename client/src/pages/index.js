@@ -3,6 +3,7 @@ import Items from './Items';
 import ItemsList from './ItemsList';
 import ItemsPlain from './ItemsPlain';
 import ItemUpdate from './ItemUpdate';
+import Upload from './Upload';
 
 export {
     ItemInsert,
@@ -10,4 +11,5 @@ export {
     ItemsList,
     ItemsPlain,
     ItemUpdate,
+    Upload,
 };

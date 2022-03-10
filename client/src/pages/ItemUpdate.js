@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../api';
-import { shared } from '../constants';
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -13,34 +13,6 @@ const Wrapper = styled.div.attrs({
   margin-top: 0 30px;
 `;
 
-const Label = styled.label`
-  margin: 5px;
-  max-width: 30%;
-`;
-
-const InputText = styled.input.attrs({
-  className: 'form-control',
-})`
-  margin: 5px auto;
-  max-width: 30%;
-  text-align: center;
-`;
-
-const Fieldset = styled.fieldset.attrs({
-  className: 'form-control',
-})`
-  border-color: transparent;
-  margin: 1em auto 0.5em;
-  max-width: 50%;
-  min-height: 6em;
-`;
-
-const DayInput = styled.input.attrs({
-  className: '',
-})`
-  margin: 5px auto;
-  text-align: center;
-`;
 
 const Button = styled.button.attrs({
   className: 'btn btn-primary',
@@ -59,11 +31,14 @@ class ItemUpdate extends Component {
     super(props);
     this.state = {
       _id: '',
-      name: '',
-      daysOfWeek: {},
-      timeframeNote: '',
-      priority: 0,
-      content: '',
+      firstName: '',
+      lastName: '',
+      age: 0,
+      zipCode: '',
+      keyFindings: '',
+      address: '',
+      hoursAd: '',
+      brix:'',
     };
   }
 
@@ -89,26 +64,49 @@ class ItemUpdate extends Component {
         return err;
       });
   };
-
-  handleChangeInputName = async event => {
-    const name = event.target.value;
-    this.setState({ name });
+ 
+  handleChangeInputFirstName = async event => {
+    const firstName = event.target.value;
+    this.setState({ firstName });
+  };
+  handleChangeInputLastName = async event => {
+    const lastName = event.target.value;
+    this.setState({ lastName });
   };
 
-  handleChangeDays = async event => {
-    const { checked } = event.target;
-    const { dayIndex } = event.target.dataset;
-    const { daysOfWeek } = this.state;
-    const { DAYS_OF_WEEK } = shared;
-
-    if (checked && !daysOfWeek[dayIndex]) {
-      daysOfWeek[dayIndex] = DAYS_OF_WEEK[dayIndex];
-    } else if (!checked && daysOfWeek[dayIndex]) {
-      delete daysOfWeek[dayIndex];
-    }
-    this.setState({ daysOfWeek: daysOfWeek });
+  handleChangeInputAge = async event => {
+    const age = event.target.value;
+    this.setState({ age });
   };
 
+  handleChangeInputZipCode = async event => {
+    const zipCode = event.target.value;
+    this.setState({ zipCode });
+  };
+
+  handleChangeInputKeyFindings = async event => {
+    const keyFindings = event.target.value;
+    this.setState({ keyFindings });
+  };
+
+  handleChangeInputAddress = async event => {
+    const address = event.target.value;
+    this.setState({ address });
+  };
+  handleChangeInputHoursAd = async event => {
+    const hoursAd = event.target.value;
+    this.setState({ hoursAd });
+  };
+
+ handleChangeInputBrix = async event => {
+    const brix = event.target.value;
+    this.setState({ brix });
+  };
+  handleChangeInputImageName = async event => {
+    const imageName = event.target.value;
+    this.setState({ imageName });
+  };
+  
   updateSingleItem = item => {
     return api
       .updateItemById(item._id, item)
@@ -128,25 +126,10 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputTimeframe = async event => {
-    const timeframeNote = event.target.value;
-    this.setState({ timeframeNote });
-  };
-
-  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
-
-    this.setState({ priority });
-  };
-
-  handleChangeInputContent = async event => {
-    const content = event.target.value;
-    this.setState({ content });
-  };
 
   handleUpdateItem = event => {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-    const item = { _id, name, daysOfWeek, timeframeNote, priority, content };
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
+    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName };
 
     return this.updateSingleItem(item)
       .then(resp => {
@@ -173,56 +156,154 @@ class ItemUpdate extends Component {
   };
 
   render() {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-
-    const { DAYS_OF_WEEK } = shared;
+    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
 
     return (
       _id && (
         <Wrapper>
-          <Title>Enter Record </Title>
+        <Title>Enter Exam Record</Title>
+        <br></br>
 
-          <Label>Name: </Label>
-          <InputText type="text" value={name} onChange={this.handleChangeInputName} />
+        <TextField type="text"     
+        value={firstName} onChange={this.handleChangeInputFirstName} 
+        label="First Name" InputLabelProps={{
+        style: { color: '#22577E' },
+        }}
+        className="txtfield" 
+        variant="filled"/>
 
-          <Fieldset>
-            <legend>Day(s) of the Week: </legend>
-            {Object.keys(DAYS_OF_WEEK).map((dayInt, i) => (
-              <React.Fragment key={DAYS_OF_WEEK[dayInt]}>
-                <DayInput
-                  type="checkbox"
-                  id={DAYS_OF_WEEK[dayInt]}
-                  className="day-checkbox-input"
-                  defaultValue={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                  data-day-index={dayInt}
-                  onChange={this.handleChangeDays}
-                  defaultChecked={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                />
-                <Label htmlFor={DAYS_OF_WEEK[dayInt]}>{DAYS_OF_WEEK[dayInt]}</Label>
-              </React.Fragment>
-            ))}
-          </Fieldset>
+        <br></br>
+        <br></br>
 
-          <Label>Timeframe Note: </Label>
-          <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
+        <TextField type="text" value={lastName} 
+        onChange={this.handleChangeInputLastName} 
+        label="Last Name"
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />       
+        <br></br>
+        <br></br>
 
-          <Label>Priority: </Label>
-          <InputText
-            type="number"
-            step="0.1"
-            lang="en-US"
-            min="0"
-            max="1000"
-            pattern="[0-9]+([,\.][0-9]+)?"
-            value={priority}
-            onChange={this.handleChangeInputPriority}
-          />
+        <TextField type="text"
+          value={address}
+          onChange={this.handleChangeInputAddress}
+          label="Address" 
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />       
+        <br></br>
+        <br></br>
 
-          <Label>Content: </Label>
-          <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
+        <TextField type="number"
+          value={zipCode} 
+          onChange={this.handleChangeInputZipCode}
+          label = "ZIP Code"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />
+        <br></br>
+        <br></br>
+
+        <TextField
+          label = "Age"
+          type="number"
+          step="1"
+          lang="en-US"
+          min="0"
+          max="100"
+          pattern="[0-9]+([,\.][0-9]+)?"
+          value={age}
+          onChange={this.handleChangeInputAge}
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+
+        />
+        <br></br>
+        <br></br>
+        
+        <TextField
+          label = "Hours Since Admission"
+          type="number"
+          step="1"
+          lang="en-US"
+          min="0"
+          max="99999"
+          pattern="[0-9]+([,\.][0-9]+)?"
+          value={hoursAd}
+          onChange={this.handleChangeInputHoursAd}
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+
+        />
+       <br></br>
+       <br></br>
+
+        <TextField
+        label="Brixia Score"
+        variant="filled"
+
+        type="number"
+        min="1"
+        lang="en-US"  
+        pattern="[0-9]+([,\.][0-9]+)?"
+        value={brix}
+        onInput = {(e) =>{
+          e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,6);
+        }
+      }
+        onChange={this.handleChangeInputBrix}
+        className="txtfield"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />
+
+        <br></br>
+        <br></br>
+
+        <TextField type="textarea"
+         value={keyFindings}
+          onChange={this.handleChangeInputKeyFindings}
+          label="Key Findings"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />
+        <br></br>
+        <br></br>
+        
+        <TextField type="text"
+        value={imageName}
+        onChange={this.handleChangeInputImageName}
+        label="Insert Image Link" 
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />
+        <br></br>
+        <br></br>
 
           <Button onClick={this.confirmUpdateItem}>Update Item</Button>
-          <CancelButton href={'/items'}>Cancel</CancelButton>
+          <CancelButton href={'/'}>Cancel</CancelButton>
         </Wrapper>
       )
     );

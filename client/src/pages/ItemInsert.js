@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {shared} from '../constants';
 import api from '../api';
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -36,27 +36,6 @@ const InputText = styled.input.attrs({
   }
 `;
 
-const Fieldset = styled.fieldset.attrs({
-  className: 'form-control',
-})`
-  background-color: transparent;
-  border-color: transparent;
-  margin: 1em auto 0.5em;
-  max-width: 50%;
-  min-height: 6em;
-
-  @media screen and (max-width: 420px) {
-    height: auto;
-    max-width: 75%;
-  }
-`;
-
-const DayInput = styled.input.attrs({
-  className: '',
-})`
-  margin: 5px 5px 5px auto;
-  text-align: center;
-`;
 
 const Button = styled.button.attrs({
   className: 'btn btn-primary',
@@ -74,48 +53,68 @@ class ItemInsert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      daysOfWeek: {},
-      timeframeNote: '',
-      priority: 0,
-      content: '',
+      firstName: '',
+      lastName: '',
+      age: 0,
+      zipCode: '',
+      keyFindings: '',
+      address: '',
+      hoursAd: '',
+      brix:'',
+      imageName:'',
     };
   }
-
-  handleChangeInputName = async event => {
-    const name = event.target.value;
-    this.setState({ name });
+  
+ 
+  handleChangeInputFirstName = async event => {
+    const firstName = event.target.value;
+    this.setState({ firstName });
+  };
+ 
+  handleChangeInputLastName = async event => {
+    const lastName = event.target.value;
+    this.setState({ lastName });
   };
 
-  handleChangeDays = async event => {
-    const { checked, value } = event.target;
-    const { daysOfWeek } = this.state;
-    const { DAYS_OF_WEEK } = shared;
-
-    if (checked && !daysOfWeek[value]) {
-      daysOfWeek[value] = DAYS_OF_WEEK[value];
-    } else if (!checked && daysOfWeek[value]) {
-      delete daysOfWeek[value];
-    }
-    this.setState({ daysOfWeek });
+  handleChangeInputAge = async event => {
+    const age = event.target.value;
+    this.setState({ age });
   };
 
-  handleChangeInputTimeframe = async event => {
-    const timeframeNote = event.target.value;
-    this.setState({ timeframeNote });
+  handleChangeInputZipCode = async event => {
+    const zipCode = event.target.value;
+    this.setState({ zipCode });
   };
 
-  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
-
-    this.setState({ priority });
+  handleChangeInputKeyFindings = async event => {
+    const keyFindings = event.target.value;
+    this.setState({ keyFindings });
   };
 
-  handleChangeInputContent = async event => {
-    const content = event.target.value;
-    this.setState({ content });
+  handleChangeInputAddress = async event => {
+    const address = event.target.value;
+    this.setState({ address });
+  };
+  handleChangeInputHoursAd = async event => {
+    const hoursAd = event.target.value;
+    this.setState({ hoursAd });
   };
 
+ handleChangeInputBrix = async event => {
+    const brix = event.target.value;
+    this.setState({ brix });
+    };
+    
+    limitKeypress(event, value, maxLength) {
+      if (value != undefined && value.toString().length >= maxLength) {
+          event.preventDefault();
+      }
+  }
+  handleChangeInputImageName = async event => {
+    const imageName = event.target.value;
+    this.setState({ imageName });
+  };
+  
   insertSingleItem = item => {
     return api
       .insertItem(item)
@@ -138,8 +137,8 @@ class ItemInsert extends Component {
   handleInsertItem = event => {
     event.preventDefault();
 
-    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
-    const item = { name, daysOfWeek, timeframeNote, priority, content };
+    const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
+    const item = {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName };
 
     this.insertSingleItem(item)
       .then(resp => {
@@ -148,18 +147,22 @@ class ItemInsert extends Component {
         if (typeof resp === 'object' && resp.status < 300 && resp.status >= 200) {
           window.alert('Item inserted successfully');
           this.setState({
-            name: '',
-            daysOfWeek: {},
-            timeframeNote: '',
-            priority: 0,
-            content: '',
+            firstName: '',
+            lastName: '',
+            age: 0,
+            zipCode: '',
+            keyFindings: '',
+            address: '',
+            hoursAd: '',
+            brix:'',
+            imageName:'',
+
           });
         } else {
           throw resp;
         }
       })
       .catch(err => {
-        // TODO: pass error object correctly so that things like validation errors can be displayed to user
         window.alert(`There was an error creating the item... :(`);
         console.log('handleInsertItem: err');
         console.log(err);
@@ -167,58 +170,157 @@ class ItemInsert extends Component {
   };
 
   render() {
-    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
-
-    const { DAYS_OF_WEEK } = shared;
-
+  
+    const {firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName} = this.state;
     return (
-      <Wrapper>
-        <Title>Enter Exam Record</Title>
+    <Wrapper>
+        <Title>Enter Exam Record</Title>       
+        <br></br>
 
-        <Label>Name: </Label>
-        <InputText type="text" value={name} onChange={this.handleChangeInputName} />
+        <TextField type="text"     
+        value={firstName} onChange={this.handleChangeInputFirstName} 
+        label="First Name" InputLabelProps={{
+        style: { color: '#22577E' },
+        }}
+        className="txtfield" 
+        variant="filled"/>
 
-        <Fieldset>
-          <legend>Day(s) of the Week: </legend>
-          {Object.keys(DAYS_OF_WEEK).map((day, i) => (
-            <React.Fragment key={day}>
-              <Label htmlFor={day}>
-                <DayInput
-                  type="checkbox"
-                  id={day}
-                  value={day}
-                  onChange={this.handleChangeDays}
-                  checked={typeof daysOfWeek[day] === 'string'}
-                />
-                {DAYS_OF_WEEK[day]}
-              </Label>
-            </React.Fragment>
-          ))}
-        </Fieldset>
+        <br></br>
+        <br></br>
 
-        <Label>Timeframe Note: </Label>
-        <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
+        <TextField type="text" value={lastName} 
+        onChange={this.handleChangeInputLastName} 
+        label="Last Name"
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />       
+        <br></br>
+        <br></br>
 
-        <Label>Priority: </Label>
-        <InputText
+        <TextField type="text"
+          value={address}
+          onChange={this.handleChangeInputAddress}
+          label="Address" 
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />       
+        <br></br>
+        <br></br>
+
+        <TextField type="number"
+          value={zipCode} 
+          onChange={this.handleChangeInputZipCode}
+          label = "ZIP Code"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />
+        <br></br>
+        <br></br>
+
+        <TextField
+          label = "Age"
           type="number"
-          step="0.1"
+          step="1"
           lang="en-US"
           min="0"
-          max="1000"
+          max="100"
           pattern="[0-9]+([,\.][0-9]+)?"
-          value={priority}
-          onChange={this.handleChangeInputPriority}
+          value={age}
+          onChange={this.handleChangeInputAge}
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+
+        />
+        <br></br>
+        <br></br>
+        
+        <TextField
+          label = "Hours Since Admission"
+          type="number"
+          step="1"
+          lang="en-US"
+          min="0"
+          max="99999"
+          pattern="[0-9]+([,\.][0-9]+)?"
+          value={hoursAd}
+          onChange={this.handleChangeInputHoursAd}
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+
+        />
+       <br></br>
+       <br></br>
+
+        <TextField
+        label="Brixia Score"
+        variant="filled"
+
+        type="number"
+        min="1"
+        lang="en-US"  
+        pattern="[0-9]+([,\.][0-9]+)?"
+        value={brix}
+        onInput = {(e) =>{
+          e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,6);
+        }
+      }
+        onChange={this.handleChangeInputBrix}
+        className="txtfield"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
         />
 
-        <Label>Content: </Label>
-        <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
+        <br></br>
+        <br></br>
+
+        <TextField type="textarea"
+         value={keyFindings}
+          onChange={this.handleChangeInputKeyFindings}
+          label="Key Findings"
+          className="txtfield"
+          variant="filled"
+          InputLabelProps={{
+            style: { color: '#22577E' },
+            }}
+        />
+        <br></br>
+        <br></br>
+        
+        <TextField type="text"
+        value={imageName}
+        onChange={this.handleChangeInputImageName}
+        label="Insert Image Link" 
+        className="txtfield" 
+        variant="filled"
+        InputLabelProps={{
+          style: { color: '#22577E' },
+          }}
+        />
+        <br></br>
+        <br></br>
 
         <Button onClick={this.handleInsertItem}>Add Item</Button>
-        <CancelButton href={'/items'}>Cancel</CancelButton>
+        <CancelButton href={'/'}>Cancel</CancelButton>
       </Wrapper>
     );
   }
+
 }
 
 export default ItemInsert;

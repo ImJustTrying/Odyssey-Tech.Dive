@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
+import { createTheme , ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+
 
 import MaUTable from '@material-ui/core/Table';
 import { CssBaseline, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
@@ -129,51 +133,31 @@ class ItemsTable extends Component {
         },
       },
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'First Name',
+        accessor: 'firstName',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-name={original.name}>{props.value}</span>;
+          return <span data-name={original.firstName}>{props.value}</span>;
         },
       },
       {
-        Header: 'Day(s)',
-        accessor: 'daysOfWeek',
+        Header: 'Last Name',
+        accessor: 'lastName',
         // filterable: true,
         Cell: props => {
-          const { daysOfWeek } = props.cell.row.original;
-          let daysToDisplay = '';
-          if (daysOfWeek && typeof daysOfWeek === 'object') {
-            for (const day in daysOfWeek) {
-              daysToDisplay =
-                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
-            }
-          }
-          return (
-            <span
-              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
-              data-daysofweek-by-id={props.value}>
-              {daysToDisplay || '-'}
-            </span>
-          );
+          const { original } = props.cell.row;
+          return <span data-name={original.lastName}>{props.value}</span>;
         },
       },
+      
+  
       {
-        Header: 'Timeframe',
-        accessor: 'timeframeNote',
+        Header: 'Brixia Numbers',
+        accessor: 'brix',
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-timeframe={original.timeframeNote}>{props.value || '-'}</span>;
-        },
-      },
-      {
-        Header: 'Priority',
-        accessor: 'priority',
-        // filterable: true,
-        Cell: props => {
-          const { original } = props.cell.row;
-          return <span data-priority={original.priority}>{props.value}</span>;
         },
       },
       {
@@ -202,15 +186,27 @@ class ItemsTable extends Component {
         },
       },
     ];
-
+    const theme = createTheme({
+      overrides: {
+          MuiTableCell: {
+              root: {  
+                  padding: '1%',
+                  backgroundColor: '#F6F2D4'
+                   
+              },
+          },
+      },
+  });
     return (
       <Wrapper>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         {(items || []).length > 0 ? (
           <Table data={items} columns={columns} />
         ) : (
           `No items to render... :(`
         )}
+        </ThemeProvider>
       </Wrapper>
     );
   }
