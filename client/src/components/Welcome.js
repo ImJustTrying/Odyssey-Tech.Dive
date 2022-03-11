@@ -1,6 +1,5 @@
 import React from 'react';
-import {ItemsList } from '../pages';
-
+import {ItemsTable } from '../pages';
 
 const Welcome = () => (
   <div className="welcome--container">
@@ -11,7 +10,8 @@ const Welcome = () => (
         This application will allow staff to review patient trends, update exam information, and view patient history.
         </section>
       <br/>
-    <ItemsList/>
+      <br/>
+    <ItemsTable/>
   </div>
 );
 
