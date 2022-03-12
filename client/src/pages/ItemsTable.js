@@ -83,9 +83,17 @@ class ItemsList extends Component {
         accessor: '_id',
         headerClassName: 'headertablecolor',
         filterable: true,
+        // Cell: props => {
+        //   return <span data-item-id={props.original._id}>{props.original._id}</span>;
+        // },
         Cell: props => {
-          return <span data-item-id={props.original._id}>{props.original._id}</span>;
+          return (
+            <Link data-item-id={props.original._id} to={`/item/${props.original._id}`}>
+              {props.original._id}
+            </Link>
+          );
         },
+
       },
       {
         Header: 'First Name',
