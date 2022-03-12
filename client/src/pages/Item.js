@@ -26,7 +26,7 @@ const CancelButton = styled.a.attrs({
   margin: 15px 15px 15px 5px;
 `;
 
-declare class Item {
+class Item extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,96 +64,6 @@ declare class Item {
         return err;
       });
   };
- 
-  handleChangeInputFirstName = async event => {
-    const firstName = event.target.value;
-    this.setState({ firstName });
-  };
-  handleChangeInputLastName = async event => {
-    const lastName = event.target.value;
-    this.setState({ lastName });
-  };
-
-  handleChangeInputAge = async event => {
-    const age = event.target.value;
-    this.setState({ age });
-  };
-
-  handleChangeInputZipCode = async event => {
-    const zipCode = event.target.value;
-    this.setState({ zipCode });
-  };
-
-  handleChangeInputKeyFindings = async event => {
-    const keyFindings = event.target.value;
-    this.setState({ keyFindings });
-  };
-
-  handleChangeInputAddress = async event => {
-    const address = event.target.value;
-    this.setState({ address });
-  };
-  handleChangeInputHoursAd = async event => {
-    const hoursAd = event.target.value;
-    this.setState({ hoursAd });
-  };
-
- handleChangeInputBrix = async event => {
-    const brix = event.target.value;
-    this.setState({ brix });
-  };
-  handleChangeInputImageName = async event => {
-    const imageName = event.target.value;
-    this.setState({ imageName });
-  };
-  
-  updateSingleItem = item => {
-    return api
-      .updateItemById(item._id, item)
-      .then(resp => {
-        console.log('updateItem: resp');
-        console.log(resp);
-        if ((resp.data || {}).success) {
-          const newItem = JSON.parse(resp.config.data);
-          console.log('newItem: ', newItem);
-        }
-        return resp;
-      })
-      .catch(err => {
-        console.error(`ERROR in 'updateSingleItem': ${err}`);
-        console.error(err);
-        return err;
-      });
-  };
-
-
-  handleUpdateItem = event => {
-    const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
-    const item = { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName };
-
-    return this.updateSingleItem(item)
-      .then(resp => {
-        console.log('handleUpdateItem: resp');
-        console.log(resp);
-        if (typeof resp === 'object' && resp.status < 300 && resp.status >= 200) {
-          window.alert('Item updated successfully');
-          return true;
-        } else {
-          throw resp;
-        }
-      })
-      .catch(err => {
-        window.alert(`There was an error updating the item... :(`);
-        console.error('handleUpdateItem: err');
-        console.error(err);
-      });
-  };
-
-  confirmUpdateItem = event => {
-    if (window.confirm(`Are you sure you want to update this item? ${this.state._id}`)) {
-      return this.handleUpdateItem(event);
-    }
-  };
 
   render() {
     const { _id, firstName, lastName, age, zipCode, keyFindings, address, hoursAd, brix, imageName } = this.state;
@@ -161,11 +71,12 @@ declare class Item {
     return (
       _id && (
         <Wrapper>
-        <Title>Enter Exam Record</Title>
+        <Title>Exam Record</Title>
         <br></br>
 
         <TextField type="text"     
-        value={firstName} onChange={this.handleChangeInputFirstName} 
+        value={firstName} 
+        // editable={false}
         label="First Name" InputLabelProps={{
         style: { color: '#22577E' },
         }}
@@ -202,7 +113,6 @@ declare class Item {
 
         <TextField type="number"
           value={zipCode} 
-          onChange={this.handleChangeInputZipCode}
           label = "ZIP Code"
           className="txtfield"
           variant="filled"
@@ -289,7 +199,10 @@ declare class Item {
         <br></br>
         <br></br>
         
-        <TextField type="text"
+        <img 
+          source={{uri:'https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/COVID-19-AR-16434409_XR_CHEST_AP_PORTABLE_1.png'}}
+        />
+        {/* <TextField type="text"
         value={imageName}
         onChange={this.handleChangeInputImageName}
         label="Insert Image Link" 
@@ -298,11 +211,9 @@ declare class Item {
         InputLabelProps={{
           style: { color: '#22577E' },
           }}
-        />
+        /> */}
         <br></br>
         <br></br>
-
-          <Button onClick={this.confirmUpdateItem}>Update Item</Button>
           <CancelButton href={'/'}>Cancel</CancelButton>
         </Wrapper>
       )

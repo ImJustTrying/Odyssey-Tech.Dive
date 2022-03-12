@@ -9,7 +9,7 @@ import './styles/App.css';
 // Static/Stateless
 import {NavBar, Welcome} from './components';
 // Pages
-import {ItemInsert, Items, ItemUpdate, Item } from './pages';
+import {ItemInsert, Items, ItemUpdate, Item} from './pages';
 
 class App extends Component {
   render() {
@@ -25,7 +25,7 @@ class App extends Component {
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
         <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
 
-        {/* <Route exact path={routes.ITEM} component={Item} /> */}
+        <Route exact path={routes.ITEM} component={Item} />
 
       </Switch>
     );
