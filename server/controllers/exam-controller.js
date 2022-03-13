@@ -81,8 +81,38 @@ getExams = async (req, res) => {
 
 getFilteredExams = async (req, res) => {
   let query_obj = {};
-  if (req.query.id) {
-    query_obj._id = req.query.id;
+
+  if (req.query.patientID) {
+    query_obj.patientID = req.query.patientID;
+  }
+
+  if (req.query.diagnosisToImageStudy) {
+    query_obj.diagnosisToImageStudy = req.query.diagnosisToImageStudy;
+  }
+
+  if (req.query.imageStudyDescription) {
+    query_obj.imageStudyDescription = req.query.imageStudyDescription;
+  }
+
+  if (req.query.studyModality) {
+    query_obj.studyModality = req.query.studyModality;
+  }
+
+  if (req.query.FIO2AtTimeOfImageStudy) {
+    query_obj.FIO2AtTimeOfImageStudy = req.query.FIO2AtTimeOfImageStudy;
+  }
+
+
+  if (req.query.keyFindings) {
+    query_obj.keyFindings = req.query.keyFindings;
+  }
+
+  if (req.query.imageFilename){
+    query_obj.imageFilename = req.query.imageFilename;
+  }
+
+  if (req.query.examID){
+    query_obj.examID = req.query.examID;
   }
 
   await Exam.find(query_obj, default_get_callback("getFilteredExams", false, res))

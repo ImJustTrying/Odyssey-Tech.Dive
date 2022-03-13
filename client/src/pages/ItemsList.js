@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
+import { createTheme , ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+
 
 import MaUTable from '@material-ui/core/Table';
 import { CssBaseline, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
@@ -143,25 +147,46 @@ class ItemsTable extends Component {
         },
       },
       {
+<<<<<<< HEAD
         Header: 'EXAM ID',
         accessor: 'examID',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-examID={original.examID}>{props.value}</span>;
+=======
+        Header: 'First Name',
+        accessor: 'firstName',
+        // filterable: true,
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-name={original.firstName}>{props.value}</span>;
+>>>>>>> main
         },
       },
 
       {
+<<<<<<< HEAD
         Header: 'Key Findings',
         accessor: 'keyFindings',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-keyFindings={original.keyFindings}>{props.value}</span>;
+=======
+        Header: 'Last Name',
+        accessor: 'lastName',
+        // filterable: true,
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-name={original.lastName}>{props.value}</span>;
+>>>>>>> main
         },
       },
+      
+  
       {
+<<<<<<< HEAD
         Header: 'IMAGES',
         accessor: 'imageFilename',
         Cell: props => {
@@ -181,6 +206,13 @@ class ItemsTable extends Component {
                   </img>
                   }
               </span>;
+=======
+        Header: 'Brixia Numbers',
+        accessor: 'brix',
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-timeframe={original.timeframeNote}>{props.value || '-'}</span>;
+>>>>>>> main
         },
       },
       
@@ -211,15 +243,27 @@ class ItemsTable extends Component {
       },
        
     ];
-
+    const theme = createTheme({
+      overrides: {
+          MuiTableCell: {
+              root: {  
+                  padding: '1%',
+                  backgroundColor: '#F6F2D4'
+                   
+              },
+          },
+      },
+  });
     return (
       <Wrapper>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         {(items || []).length > 0 ? (
           <Table data={items} columns={columns} />
         ) : (
           `No items to render... :(`
         )}
+        </ThemeProvider>
       </Wrapper>
     );
   }

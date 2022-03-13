@@ -1,26 +1,50 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+/*
+    
+          
+        
+           
+*/
 const Item = new Schema(
     {
-        name: {
+        firstName: {
             type: String,
             required: true
         },
-        daysOfWeek: {
-            type: Map,
-            of: String,
-            required: false
-        },
-        timeframeNote: {
+        lastName: {
             type: String,
-            required: false
+            required: true
         },
-        priority: {
+        keyFindings: {
+            type: String,
+            required: true
+        },
+        age: {
             type: Number,
-            required: false
+            required: true
         },
-        content: {
+        zipCode: {
+            type: Number,
+            required: true
+        },
+        age: {
+            type: Number,
+            required: true
+        },
+        hoursAd: {
+            type: Number,
+            required: true
+        },
+        brix: {
+            type: Number,
+            required: true
+        },
+        address: {
+            type: String,
+            required: true
+        },
+        imageName: {
             type: String,
             required: true
         },
