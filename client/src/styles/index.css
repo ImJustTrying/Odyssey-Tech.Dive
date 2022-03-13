@@ -24,11 +24,40 @@ code {
 }
 
 a {
-    color: #033fb4;
+    color: #22577E;
 }
 
 a:hover,
 .delete-item-btn:hover {
     opacity: 0.7;
     text-decoration: none;
+}
+
+.txtfield {
+    width : 30%; 
+}
+.btn-primary {
+    color: #fff;
+    background-color: #2E4C80;
+    border-color: #2E4C80;
+}
+.btn-danger{
+    color: #fff;
+    background-color: #8d1a29;
+    border-color: #8d1a29;
+}
+.btn-primary:hover {
+    background-color:#95D1CC;
+    border-color: #95D1CC;
+    opacity: 0.7;
+    text-decoration: none;
+}
+.btn-danger:hover {
+    background-color:#d1959d;
+    border-color: #d1959d;
+    opacity: 0.7;
+    text-decoration: none;
+}
+.headertablecolor{
+    background-color: #F6F2D4;
 }

@@ -9,18 +9,24 @@ import './styles/App.css';
 // Static/Stateless
 import {NavBar, Welcome} from './components';
 // Pages
-import {ItemInsert, Items, ItemUpdate} from './pages';
+import {ItemInsert, Items, ItemUpdate, Item} from './pages';
 
 class App extends Component {
   render() {
     // TODO: maybe only need one route for Items?
     const publicViews = (
       <Switch>
-        <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
+        
         <Route exact path={routes.HOME} component={Welcome} />
-        <Route exact path={routes.ITEMS} component={Items} />
-        <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
+        {/* <Route exact path={routes.ITEMS} component={Items} />
+        <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} /> */}
+
+
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
+        <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
+
+        <Route exact path={routes.ITEM} component={Item} />
+
       </Switch>
     );
 
