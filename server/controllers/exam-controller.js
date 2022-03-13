@@ -81,6 +81,7 @@ getExams = async (req, res) => {
 
 getFilteredExams = async (req, res) => {
   let query_obj = {};
+
   if (req.query.patientID) {
     query_obj.patientID = req.query.patientID;
   }
@@ -100,6 +101,7 @@ getFilteredExams = async (req, res) => {
   if (req.query.FIO2AtTimeOfImageStudy) {
     query_obj.FIO2AtTimeOfImageStudy = req.query.FIO2AtTimeOfImageStudy;
   }
+
 
   if (req.query.keyFindings) {
     query_obj.keyFindings = req.query.keyFindings;
