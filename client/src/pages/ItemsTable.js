@@ -12,8 +12,6 @@ const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
 
-
-
 class ItemsList extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +70,6 @@ class ItemsList extends Component {
     });
   };
 
-  
   render() {
     const items = this.state.items || {};
     console.log(items);
@@ -81,46 +78,51 @@ class ItemsList extends Component {
       {
         Header: 'ID',
         accessor: '_id',
-        headerClassName: 'headertablecolor',
         filterable: true,
-        // Cell: props => {
-        //   return <span data-item-id={props.original._id}>{props.original._id}</span>;
-        // },
         Cell: props => {
-          return (
-            <Link data-item-id={props.original._id} to={`/item/${props.original._id}`}>
-              {props.original._id}
-            </Link>
-          );
+          return <span data-item-id={props.original._id}>{props.original._id}</span>;
         },
-
       },
       {
-        Header: 'First Name',
-        accessor: 'firstName',
+        Header: 'Name',
+        accessor: 'name',
         filterable: true,
-        headerClassName: 'headertablecolor',
-
         Cell: props => {
           return <span data-name={props.original.name}>{props.value}</span>;
         },
       },
-   
       {
-        Header: 'Last Name',
-        headerClassName: 'headertablecolor',
+        Header: 'Day(s)',
+        accessor: 'daysOfWeek',
         filterable: true,
-        accessor: 'lastName',
-        
+        Cell: props => {
+          const { daysOfWeek } = props.original;
+          let daysToDisplay = '';
+          if (daysOfWeek && typeof daysOfWeek === 'object') {
+            for (const day in daysOfWeek) {
+              daysToDisplay =
+                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
+            }
+          }
+          return (
+            <span
+              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
+              data-daysofweek-by-id={props.original._id}>
+              {daysToDisplay || '-'}
+            </span>
+          );
+        },
+      },
+      {
+        Header: 'Timeframe',
+        accessor: 'timeframeNote',
         Cell: props => {
           return <span data-timeframe={props.original.timeframeNote}>{props.value || '-'}</span>;
         },
       },
       {
-        Header: 'Address',
-        accessor: 'address',
-        headerClassName: 'headertablecolor',
-
+        Header: 'Priority',
+        accessor: 'priority',
         filterable: true,
         Cell: props => {
           return <span data-priority={props.original.priority}>{props.value}</span>;

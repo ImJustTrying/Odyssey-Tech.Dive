@@ -15,7 +15,6 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
-
   @media screen and (max-width: 420px) {
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -27,6 +26,18 @@ const Table = ({ columns, data }) => {
     columns,
     data,
   });
+
+  const ItemImage = styled.img`
+  margin: auto;
+  max-height: 22em;
+  object-fit: contain;
+  max-width: 80%;
+`;
+
+
+
+
+
 
   return (
     <MaUTable {...getTableProps()}>
@@ -78,12 +89,13 @@ class ItemsTable extends Component {
 
   fetchAllItems = () => {
     api
-      .getAllItems()
+      .getAllExams()
       .then(resp => {
-        const { items } = resp.data;
-        console.log('getAllItems: resp');
+        const items = resp.data.exams;
+        console.log('getAllExams: resp');
         console.log(items);
         this.setState({ items });
+        console.log(this.state);
       })
       .catch(err => {
         console.error(`ERROR in 'getAllItems': ${err}`);
@@ -94,7 +106,7 @@ class ItemsTable extends Component {
 
   deleteSingleItem = itemId => {
     return api
-      .deleteItemById(itemId)
+      .deleteExamById(itemId)
       .then(resp => {
         console.log('deleteItemById: resp');
         console.log(resp);
@@ -120,46 +132,90 @@ class ItemsTable extends Component {
   render() {
     const items = this.state.items || {};
     console.log(items);
-
+    var count = 0;
+  
     const columns = [
       {
-        Header: 'ID',
-        accessor: '_id',
+        Header: 'Patient ID',
+        accessor: 'patientID',
         // filterable: true,
         Cell: props => {
           console.log(props);
+          console.log(count++);
           const { original } = props.cell.row;
-          return <span data-item-id={original._id}>{props.value}</span>;
+          return <span data-patientID={original.patientID}>{props.value}</span>;
         },
       },
       {
+<<<<<<< HEAD
+        Header: 'EXAM ID',
+        accessor: 'examID',
+        // filterable: true,
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-examID={original.examID}>{props.value}</span>;
+=======
         Header: 'First Name',
         accessor: 'firstName',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-name={original.firstName}>{props.value}</span>;
+>>>>>>> main
         },
       },
+
       {
+<<<<<<< HEAD
+        Header: 'Key Findings',
+        accessor: 'keyFindings',
+        // filterable: true,
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-keyFindings={original.keyFindings}>{props.value}</span>;
+=======
         Header: 'Last Name',
         accessor: 'lastName',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-name={original.lastName}>{props.value}</span>;
+>>>>>>> main
         },
       },
       
   
       {
+<<<<<<< HEAD
+        Header: 'IMAGES',
+        accessor: 'imageFilename',
+        Cell: props => {
+          const { original } = props.cell.row;
+          
+          return <span data-imageFilename={original.imageFilename}>
+                  {<img
+                    src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}
+                    alt="Cannot find picture" width="150" height="150"
+                    onClick={() =>{
+                      // var source = image.src;
+                      var source = `https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`
+                      window.open(source);
+                    }
+                    }
+                  >
+                  </img>
+                  }
+              </span>;
+=======
         Header: 'Brixia Numbers',
         accessor: 'brix',
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-timeframe={original.timeframeNote}>{props.value || '-'}</span>;
+>>>>>>> main
         },
       },
+      
       {
         Header: 'Update',
         accessor: '_update',
@@ -167,7 +223,7 @@ class ItemsTable extends Component {
           const { original } = props.cell.row;
 
           return (
-            <Link data-update-id={original._id} to={`/item/update/${original._id}`}>
+            <Link data-update-id={original._id} to={`/exam/update?id=${original._id}`}>
               Update
             </Link>
           );
@@ -178,13 +234,14 @@ class ItemsTable extends Component {
         accessor: '_delete',
         Cell: props => {
           const { original } = props.cell.row;
-          return (
-            <span data-delete-id={original._id}>
-              <DeleteButton id={original._id} onDelete={this.handleRemoveItem} />
-            </span>
-          );
+            return (
+              <span data-delete-id={original._id}>
+                <DeleteButton id={original._id} onDelete={this.handleRemoveItem} />
+                  </span>
+                );
         },
       },
+       
     ];
     const theme = createTheme({
       overrides: {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
+
 import styled from 'styled-components';
 
 const generateRandomImageWidth = () => {
@@ -27,7 +28,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 0 40px 40px 40px;
-
   @media screen and (max-width: 420px) {
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -88,12 +88,16 @@ class ItemsPlain extends Component {
 
   fetchAllItems = () => {
     api
-      .getAllItems()
+      .getAllExams()
       .then(resp => {
-        const { items } = resp.data;
-        console.log('getAllItems: resp');
+        // console.log(resp.data);
+        // const { items } = resp.data;
+        const items = resp.data.exams;
+        console.log('getAllExams: resp');
+        //success
         console.log(items);
         this.setState({ items });
+        console.log(this.state);
       })
       .catch(err => {
         console.error(`ERROR in 'getAllItems': ${err}`);
@@ -104,7 +108,7 @@ class ItemsPlain extends Component {
 
   deleteSingleItem = itemId => {
     return api
-      .deleteItemById(itemId)
+      .deleteExamById(itemId)
       .then(resp => {
         console.log('deleteItemById: resp');
         console.log(resp);
@@ -137,17 +141,16 @@ class ItemsPlain extends Component {
           ? items.map(item => (
               <ItemContainer key={item._id}>
                 <ItemImage src={generateRandomCat()}></ItemImage>
-                <NameHeader>{item.name}</NameHeader>
+                <NameHeader>{item.patientID}</NameHeader>
                 <DetailParagraph>ID: {item._id}</DetailParagraph>
-                <DetailParagraph>Priority: {item.priority}</DetailParagraph>
+                <DetailParagraph>Priority: {item.keyFindings}</DetailParagraph>
                 <ButtonsWrapper>
-                  <Link data-update-id={item._id} to={`/item/update/${item._id}`}>
+                  <Link data-update-id={item._id} to={`/exam/update/${item._id}`}>
                     Update Item
                   </Link>
                   <DeleteButton id={item._id} onDelete={this.handleRemoveItem} />
                 </ButtonsWrapper>
               </ItemContainer>
-  
             ))
           : `No items to render... :(`}
       </Wrapper>

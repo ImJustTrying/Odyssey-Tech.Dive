@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-import {routes} from '../constants';
-import {Button} from '@material-ui/core';
+
+import { routes } from '../constants';
+
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
-import {ItemsList, ItemsPlain} from '../pages';
+
+import { ItemsList, ItemsPlain, ItemsTable } from '../pages';
 
 const LinksGridContainer = styled.div`
   display: grid;
@@ -27,17 +30,30 @@ const linkTextColor = linkPathname => {
 
 const itemsPageVariants = [
   {
-    name: 'Items (with only styled-components)',
-    toPathname: `${routes.ITEMS}/items-plain`,
-    pageComponent: ItemsList,
+    name: 'Exams',
+    toPathname: `${routes.EXAMS}`,
+    pageComonent: ItemsList,
   },
+  // {
+  //   name: 'Search Exams',
+  //   toPathname: `${routes.ITEMS}/react-table-v6`,
+  //   pageComponent: ItemsTable,
+  // },
+  // {
+  //   name: 'Exam Pictures',
+  //   toPathname: `${routes.EXAMS}/items-plain`,
+  //   pageComponent: ItemsPlain,
+  // },
 ];
 
 class Items extends Component {
   render() {
+    // TODO: would be better to dynamically create the routes based on page variations
     const itemsPages = (
       <Switch>
-        <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} />
+        <Route exact path={`${routes.EXAMS}`} component={ItemsList} />
+        {/* <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
+        <Route exact path={`${routes.EXAMS}/items-plain`} component={ItemsPlain} /> */}
       </Switch>
     );
 
