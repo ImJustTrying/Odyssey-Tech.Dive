@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .app--main {
   text-align: center;
 }
@@ -17,8 +21,9 @@
     overflow: auto;
 }
 .desc {
-  text-align: center;
-    width: 40%;
-    font-size: 150%;
-    margin-left: 31%;
+    font-family: 'Arial' ;
+    text-align: center;
+    width: 70%;
+    font-size: 135%;
+    margin-left: 15%;
 }

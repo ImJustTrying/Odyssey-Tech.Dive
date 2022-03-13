@@ -161,7 +161,7 @@ class ItemsList extends Component {
             minRows={10}
           />
         ) : (
-          `No items to render... :(`
+          `No items to render... 🙁`
         )}
       </Wrapper>
     );
