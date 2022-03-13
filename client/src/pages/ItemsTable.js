@@ -70,11 +70,9 @@ class ItemsList extends Component {
     });
   };
 
-
   render() {
     const items = this.state.items || {};
     console.log(items);
-    
 
     const columns = [
       {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../api';
 import { shared } from '../constants';
+
 import styled from 'styled-components';
 
 const Title = styled.h1.attrs({
@@ -180,7 +181,7 @@ class ItemUpdate extends Component {
     return (
       _id && (
         <Wrapper>
-          <Title>Enter Record </Title>
+          <Title>Create Item</Title>
 
           <Label>Name: </Label>
           <InputText type="text" value={name} onChange={this.handleChangeInputName} />

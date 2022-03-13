@@ -13,14 +13,18 @@ const api = axios.create({
 
 export const getAllExams = payload => api.get(`/exams`, payload);
 export const getAllItems = payload => api.get(`/items`, payload);
-export const getExamById = id => api.get(`/exam/${id}`);
+
+export const getExamById = id => api.get(`/filtered-exams?id=${id}`);
 export const getItemById = id => api.get(`/item/${id}`);
+
 export const insertExam = payload => api.post(`/exam`, payload);
 export const insertItem = payload => api.post(`/item`, payload);
+
 export const updateItemById = (id, payload) => api.put(`/item/${id}`, payload);
-export const updateExamById = (id, payload) => api.put(`/exam/${id}`, payload);
+export const updateExamById = (id, payload) => api.put('/exam/:id/:field/:value', payload);
+
 export const deleteItemById = id => api.delete(`/item/${id}`);
-export const deleteExamById = id => api.delete(`/exam/${id}`);
+export const deleteExamById = id => api.delete('/exam/:id');
 
 const apis = {
   getAllExams,

@@ -31,19 +31,19 @@ const linkTextColor = linkPathname => {
 const itemsPageVariants = [
   {
     name: 'Exams',
-    toPathname: routes.EXAMS,
+    toPathname: `${routes.EXAMS}`,
     pageComonent: ItemsList,
   },
-  {
-    name: 'Search Exams',
-    toPathname: `${routes.ITEMS}/react-table-v6`,
-    pageComponent: ItemsTable,
-  },
-  {
-    name: 'Exam Pictures',
-    toPathname: `${routes.ITEMS}/items-plain`,
-    pageComponent: ItemsPlain,
-  },
+  // {
+  //   name: 'Search Exams',
+  //   toPathname: `${routes.ITEMS}/react-table-v6`,
+  //   pageComponent: ItemsTable,
+  // },
+  // {
+  //   name: 'Exam Pictures',
+  //   toPathname: `${routes.EXAMS}/items-plain`,
+  //   pageComponent: ItemsPlain,
+  // },
 ];
 
 class Items extends Component {
@@ -51,9 +51,9 @@ class Items extends Component {
     // TODO: would be better to dynamically create the routes based on page variations
     const itemsPages = (
       <Switch>
-        <Route exact path={routes.EXAMS} component={ItemsList} />
-        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
-        <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} />
+        <Route exact path={`${routes.EXAMS}`} component={ItemsList} />
+        {/* <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
+        <Route exact path={`${routes.EXAMS}/items-plain`} component={ItemsPlain} /> */}
       </Switch>
     );
 
