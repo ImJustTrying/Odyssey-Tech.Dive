@@ -34,11 +34,11 @@ const itemsPageVariants = [
     toPathname: `${routes.EXAMS}`,
     pageComonent: ItemsList,
   },
-  // {
-  //   name: 'Search Exams',
-  //   toPathname: `${routes.ITEMS}/react-table-v6`,
-  //   pageComponent: ItemsTable,
-  // },
+  {
+    name: 'Search Exams',
+    toPathname: `${routes.ITEMS}/react-table-v6`,
+    pageComponent: ItemsTable,
+  },
   // {
   //   name: 'Exam Pictures',
   //   toPathname: `${routes.EXAMS}/items-plain`,
@@ -52,8 +52,8 @@ class Items extends Component {
     const itemsPages = (
       <Switch>
         <Route exact path={`${routes.EXAMS}`} component={ItemsList} />
-        {/* <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
-        <Route exact path={`${routes.EXAMS}/items-plain`} component={ItemsPlain} /> */}
+        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
+        {/* <Route exact path={`${routes.EXAMS}/items-plain`} component={ItemsPlain} /> */}
       </Switch>
     );
 
