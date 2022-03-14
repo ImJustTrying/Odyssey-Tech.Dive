@@ -74,62 +74,98 @@ class ItemInsert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      daysOfWeek: {},
-      timeframeNote: '',
-      priority: 0,
-      content: '',
+      patientID: '',
+      age: 0,
+      sex: '',
+      race: '',
+      zip: 0,
+      latestBMI: 0,
+      latestWeight: 0,
+      latestHeight: '',
+      testName: '',
+      ICUAdmits: 0,
+
     };
   }
 
-  handleChangeInputName = async event => {
-    const name = event.target.value;
-    this.setState({ name });
+  handleChangeInputPatientID = async event => {
+    const patientID = event.target.value;
+    this.setState({ patientID });
   };
 
-  handleChangeDays = async event => {
-    const { checked, value } = event.target;
-    const { daysOfWeek } = this.state;
-    const { DAYS_OF_WEEK } = shared;
+  // handleChangeDays = async event => {
+  //   const { checked, value } = event.target;
+  //   const { daysOfWeek } = this.state;
+  //   const { DAYS_OF_WEEK } = shared;
 
-    if (checked && !daysOfWeek[value]) {
-      daysOfWeek[value] = DAYS_OF_WEEK[value];
-    } else if (!checked && daysOfWeek[value]) {
-      delete daysOfWeek[value];
-    }
-    this.setState({ daysOfWeek });
+  //   if (checked && !daysOfWeek[value]) {
+  //     daysOfWeek[value] = DAYS_OF_WEEK[value];
+  //   } else if (!checked && daysOfWeek[value]) {
+  //     delete daysOfWeek[value];
+  //   }
+  //   this.setState({ daysOfWeek });
+  // };
+
+  handleChangeInputAge = async event => {
+    const age = event.target.value;
+    this.setState({ age });
   };
 
-  handleChangeInputTimeframe = async event => {
-    const timeframeNote = event.target.value;
-    this.setState({ timeframeNote });
+  handleChangeInputSex = async event => {
+    const sex = event.target.value;
+
+    this.setState({ sex });
   };
 
-  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
-
-    this.setState({ priority });
+  handleChangeInputRace = async event => {
+    const race = event.target.value;
+    this.setState({ race });
   };
 
-  handleChangeInputContent = async event => {
-    const content = event.target.value;
-    this.setState({ content });
+  handleChangeInputZip = async event => {
+    const zip = event.target.value;
+    this.setState({ zip });
+  };
+
+  handleChangeInputLatestBMI = async event => {
+    const latestBMI = event.target.value;
+    this.setState({ latestBMI });
+  };
+
+  handleChangeInputLatestWeight = async event => {
+    const latestWeight = event.target.value;
+    this.setState({ latestWeight });
+  };
+
+  handleChangeInputLatestHeight = async event => {
+    const latestHeight = event.target.value;
+    this.setState({ latestHeight });
+  };
+
+  handleChangeInputTestName = async event => {
+    const testName = event.target.value;
+    this.setState({ testName });
+  };
+
+  handleChangeInputICUAdmits = async event => {
+    const ICUAdmits = event.target.value;
+    this.setState({ ICUAdmits });
   };
 
   insertSingleItem = item => {
     return api
-      .insertItem(item)
+      .insertPatient(item)
       .then(resp => {
-        console.log('insertItem: resp');
+        console.log('insertPatient: resp');
         console.log(resp);
         if ((resp.data || {}).success) {
           const newItem = JSON.parse(resp.config.data);
-          console.log('insertItem: newItem', newItem);
+          console.log('insertPateint: newPatient', newItem);
         }
         return resp;
       })
       .catch(err => {
-        console.error(`ERROR in 'insertSingleItem': ${err}`);
+        console.error(`ERROR in 'insertSinglePatient': ${err}`);
         console.error(err);
         return err;
       });
@@ -138,21 +174,26 @@ class ItemInsert extends Component {
   handleInsertItem = event => {
     event.preventDefault();
 
-    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
-    const item = { name, daysOfWeek, timeframeNote, priority, content };
+    const { patientID, age, sex, race, zip, latestBMI, latestWeight, latestHeight, testName, ICUAdmits } = this.state;
+    const item = { patientID, age, sex, race, zip, latestBMI, latestWeight, latestHeight, testName, ICUAdmits };
 
     this.insertSingleItem(item)
       .then(resp => {
-        console.log('handleInsertItem: resp');
+        console.log('handleInsertPatient: resp');
         console.log(resp);
         if (typeof resp === 'object' && resp.status < 300 && resp.status >= 200) {
           window.alert('Item inserted successfully');
           this.setState({
-            name: '',
-            daysOfWeek: {},
-            timeframeNote: '',
-            priority: 0,
-            content: '',
+            patientID: '',
+            age: 0,
+            sex: '',
+            race: '',
+            zip: 0,
+            latestBMI: 0,
+            latestWeight: 0,
+            latestHeight: '',
+            testName: '',
+            ICUAdmits: 0,
           });
         } else {
           throw resp;
@@ -167,18 +208,16 @@ class ItemInsert extends Component {
   };
 
   render() {
-    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
-
-    const { DAYS_OF_WEEK } = shared;
+    const { patientID, age, sex, race, zip, latestBMI, latestWeight, latestHeight, testName, ICUAdmits } = this.state;
 
     return (
       <Wrapper>
-        <Title>Enter Exam Record</Title>
+        <Title>Enter Patient Record</Title>
 
-        <Label>Name: </Label>
-        <InputText type="text" value={name} onChange={this.handleChangeInputName} />
+        <Label>Patient ID: </Label>
+        <InputText type="text" value={patientID} onChange={this.handleChangeInputPatientID} />
 
-        <Fieldset>
+        {/* <Fieldset>
           <legend>Day(s) of the Week: </legend>
           {Object.keys(DAYS_OF_WEEK).map((day, i) => (
             <React.Fragment key={day}>
@@ -194,12 +233,12 @@ class ItemInsert extends Component {
               </Label>
             </React.Fragment>
           ))}
-        </Fieldset>
+        </Fieldset> */}
 
-        <Label>Timeframe Note: </Label>
-        <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
+        <Label>Age: </Label>
+        <InputText type="text" value={age} onChange={this.handleChangeInputAge} />
 
-        <Label>Priority: </Label>
+        {/* <Label>Priority: </Label>
         <InputText
           type="number"
           step="0.1"
@@ -209,12 +248,33 @@ class ItemInsert extends Component {
           pattern="[0-9]+([,\.][0-9]+)?"
           value={priority}
           onChange={this.handleChangeInputPriority}
-        />
+        /> */}
 
-        <Label>Content: </Label>
-        <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
+        <Label>SEX: </Label>
+        <InputText type="text" value={sex} onChange={this.handleChangeInputSex} />
 
-        <Button onClick={this.handleInsertItem}>Add Item</Button>
+        <Label>RACE: </Label>
+        <InputText type="text" value={race} onChange={this.handleChangeInputRace} />
+
+        <Label>ZIP: </Label>
+        <InputText type="text" value={zip} onChange={this.handleChangeInputZip} />
+
+        <Label>LATEST BMI: </Label>
+        <InputText type="text" value={latestBMI} onChange={this.handleChangeInputLatestBMI} />
+
+        <Label>LATEST WEIGHT: </Label>
+        <InputText type="text" value={latestWeight} onChange={this.handleChangeInputLatestWeight} />
+
+        <Label>LATEST HEIGHT: </Label>
+        <InputText type="text" value={latestHeight} onChange={this.handleChangeInputLatestHeight} />
+
+        <Label>TEST NAME: </Label>
+        <InputText type="text" value={testName} onChange={this.handleChangeInputTestName} />
+
+        <Label>ICU ADMITS: </Label>
+        <InputText type="text" value={ICUAdmits} onChange={this.handleChangeInputICUAdmits} />
+
+        <Button onClick={this.handleInsertItem}>Add Patient</Button>
         <CancelButton href={'/items'}>Cancel</CancelButton>
       </Wrapper>
     );

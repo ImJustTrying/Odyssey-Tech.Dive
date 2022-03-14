@@ -28,14 +28,14 @@ const navBarItems = [
   },
   {
     name: 'Administration',
-    toPathname: '/item/create',
+    toPathname: '/patient/create',
     className: 'nav-link',
   },
-  {
-    name: 'Details',
-    toPathname: '/item/:id',
-    className: 'nav-link',
-  },
+  // {
+  //   name: 'Details',
+  //   toPathname: '/about',
+  //   className: 'nav-link',
+  // },
 ];
 
 class NavBar extends Component {

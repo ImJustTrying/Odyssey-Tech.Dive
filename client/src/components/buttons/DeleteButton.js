@@ -24,7 +24,7 @@ class DeleteButton extends Component {
   };
 
   render() {
-    return <Delete onClick={this.confirmDeleteItem}>Delete Item</Delete>;
+    return <Delete onClick={this.confirmDeleteItem}>Delete Record</Delete>;
   }
 }
 

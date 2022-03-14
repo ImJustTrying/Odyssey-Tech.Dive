@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { useTable } from 'react-table';
+import { useTable, useFilters } from 'react-table';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
 
@@ -129,6 +129,21 @@ class ItemsTable extends Component {
     const items = this.state.items || {};
     console.log(items);
     var count = 0;
+    
+    const ColumnFilter = ({column}) => {
+      const {filterValue, setFilter} = column
+
+      return (
+        <span>
+          Search:{' '}
+          <input value={filterValue || ''}
+          onchange={(e) => setFilter(e.target.value)}
+          >
+
+          </input>
+        </span>
+      )
+    }
   
     const columns = [
       {
@@ -145,6 +160,7 @@ class ItemsTable extends Component {
       {
         Header: 'EXAM ID',
         accessor: 'examID',
+      
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
@@ -155,7 +171,8 @@ class ItemsTable extends Component {
       {
         Header: 'Key Findings',
         accessor: 'keyFindings',
-        // filterable: true,
+        
+        // Filter: multiSelectFilter,
         Cell: props => {
           const { original } = props.cell.row;
           return <span data-keyFindings={original.keyFindings}>{props.value}</span>;
@@ -164,6 +181,7 @@ class ItemsTable extends Component {
       {
         Header: 'IMAGES',
         accessor: 'imageFilename',
+       
         Cell: props => {
           const { original } = props.cell.row;
           

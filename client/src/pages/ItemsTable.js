@@ -30,11 +30,11 @@ class ItemsList extends Component {
 
   fetchAllItems = () => {
     api
-      .getAllItems()
+      .getAllPatients()
       .then(resp => {
         debugger;
-        const { items } = resp.data;
-        console.log('getAllItems: resp');
+        const items = resp.data.patients;
+        console.log('getAllPatients: resp');
         console.log(items);
         this.setState({ items });
       })
@@ -47,7 +47,7 @@ class ItemsList extends Component {
 
   deleteSingleItem = itemId => {
     return api
-      .deleteItemById(itemId)
+      .deletePatientById(itemId)
       .then(resp => {
         console.log('deleteItemById: resp');
         console.log(resp);
@@ -73,63 +73,50 @@ class ItemsList extends Component {
   render() {
     const items = this.state.items || {};
     console.log(items);
+    // api.getAllPatients().then(
+    //   resp => {
+    //     console.log(resp.data.patients);
+    //   }
+    // )
 
     const columns = [
       {
-        Header: 'ID',
-        accessor: '_id',
+        Header: 'Patient ID',
+        accessor: 'patientID',
         filterable: true,
         Cell: props => {
-          return <span data-item-id={props.original._id}>{props.original._id}</span>;
-        },
-      },
-      {
-        Header: 'Name',
-        accessor: 'name',
-        filterable: true,
-        Cell: props => {
+          // return <span data-item-id={props.original._id}>{props.original._id}</span>;
           return (
-            <Link data-item-id={props.original._id} to={`/item/${props.original._id}`}>
-              {props.original._id}
+            <Link data-item-id={props.original.patientID} to={`/about`}>
+              {props.original.patientID}
             </Link>
+
           );
         },
       },
       {
-        Header: 'Day(s)',
-        accessor: 'daysOfWeek',
+        Header: 'Age',
+        accessor: 'age',
         filterable: true,
         Cell: props => {
-          const { daysOfWeek } = props.original;
-          let daysToDisplay = '';
-          if (daysOfWeek && typeof daysOfWeek === 'object') {
-            for (const day in daysOfWeek) {
-              daysToDisplay =
-                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
-            }
-          }
-          return (
-            <span
-              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
-              data-daysofweek-by-id={props.original._id}>
-              {daysToDisplay || '-'}
-            </span>
-          );
+          return <span data-age={props.original.age}>{props.original.age}</span>;
+        },
+      },
+
+      {
+        Header: 'Sex',
+        accessor: 'sex',
+        filterable: true,
+        Cell: props => {
+          return <span data-sex={props.original.sex}>{props.value || '-'}</span>;
         },
       },
       {
-        Header: 'Timeframe',
-        accessor: 'timeframeNote',
-        Cell: props => {
-          return <span data-timeframe={props.original.timeframeNote}>{props.value || '-'}</span>;
-        },
-      },
-      {
-        Header: 'Priority',
-        accessor: 'priority',
+        Header: 'Race',
+        accessor: 'race',
         filterable: true,
         Cell: props => {
-          return <span data-priority={props.original.priority}>{props.value}</span>;
+          return <span data-race={props.original.race}>{props.value}</span>;
         },
       },
       {
@@ -137,7 +124,7 @@ class ItemsList extends Component {
         accessor: '',
         Cell: props => {
           return (
-            <Link data-update-id={props.original._id} to={`/item/update/${props.original._id}`}>
+            <Link data-update-id={props.original._id} to={`/patient/update/${props.original._id}`}>
               Update Item
             </Link>
           );
@@ -145,7 +132,7 @@ class ItemsList extends Component {
       },
       {
         Header: '',
-        accessor: '',
+        accessor: '_delete',
         Cell: props => {
           return (
             <span data-delete-id={props.original._id}>
